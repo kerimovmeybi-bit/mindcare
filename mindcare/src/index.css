@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+/* Кастомные стили для темной темы */
+.dark-theme {
+  background-color: #020617 !important;
+  color: #f8fafc !important;
+}
+
+.dark-theme .bg-white {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #1e293b !important;
+}
+
+.dark-theme .text-slate-800,
+.dark-theme .text-slate-900,
+.dark-theme h3, 
+.dark-theme h2 {
+  color: #f8fafc !important;
+}
+
+.dark-theme .text-slate-600,
+.dark-theme .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+.dark-theme .bg-slate-50 {
+  background-color: #020617 !important;
+}
+
+.dark-theme .bg-slate-100 {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+.dark-theme input, 
+.dark-theme textarea, 
+.dark-theme select {
+  background-color: #1e293b !important;
+  color: #ffffff !important;
+  border-color: #334155 !important;
+}
