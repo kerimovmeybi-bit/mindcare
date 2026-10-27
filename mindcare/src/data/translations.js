@@ -28,9 +28,16 @@ export const translations = {
       badge: "Специалист",
       logoutBtn: "Выйти из аккаунта",
       editSectionTitle: "Редактирование профиля и услуг",
+      nameLabel: "Ваше имя и фамилия",
+      titleLabel: "Специализация / Титул",
+      aboutLabel: "О себе / Биография",
       priceLabel: "Стоимость сессии (грн/час)",
-      slotsLabel: "Свободные слоты для записи",
-      slotPlaceholder: "например: Пн, 14:00",
+      topicsLabel: "Специализация (теги проблематик)",
+      slotsLabel: "Управление расписанием и слотами",
+      slotDateLabel: "Дата сессии",
+      slotTimeLabel: "Время",
+      addSlotBtn: "Добавить слот",
+      slotPlaceholder: "например: 14:00",
       addBtn: "Добавить",
       saveBtn: "Сохранить изменения",
       bookingsTitle: "Ваши записи",
@@ -38,7 +45,18 @@ export const translations = {
       clientName: "Клиент:",
       phone: "Телефон:",
       slotTime: "Время:",
-      notes: "Запрос:"
+      notes: "Запрос:",
+      status: "Статус:",
+      statusPending: "В ожидании",
+      statusConfirmed: "Подтверждена",
+      statusCompleted: "Завершена",
+      statusCancelled: "Отменена",
+      stats: {
+        totalBookings: "Всего записей",
+        confirmedSessions: "Подтверждено",
+        completedSessions: "Завершено",
+        estimatedRevenue: "Доход (грн)"
+      }
     },
     psychologists: {
       anna: {
@@ -102,9 +120,16 @@ export const translations = {
       badge: "Фахівець",
       logoutBtn: "Вийти з облікового запису",
       editSectionTitle: "Редагування профілю та послуг",
+      nameLabel: "Ваше ім'я та прізвище",
+      titleLabel: "Спеціалізація / Титул",
+      aboutLabel: "Про себе / Біографія",
       priceLabel: "Вартість сесії (грн/год)",
-      slotsLabel: "Вільні слоти для запису",
-      slotPlaceholder: "наприклад: Пн, 14:00",
+      topicsLabel: "Спеціалізація (теги проблематик)",
+      slotsLabel: "Управління розкладом та слотами",
+      slotDateLabel: "Дата сесії",
+      slotTimeLabel: "Час",
+      addSlotBtn: "Додати слот",
+      slotPlaceholder: "наприклад: 14:00",
       addBtn: "Додати",
       saveBtn: "Зберегти зміни",
       bookingsTitle: "Ваші записи",
@@ -112,7 +137,18 @@ export const translations = {
       clientName: "Клієнт:",
       phone: "Телефон:",
       slotTime: "Час:",
-      notes: "Запит:"
+      notes: "Запит:",
+      status: "Статус:",
+      statusPending: "Очікує",
+      statusConfirmed: "Підтверджена",
+      statusCompleted: "Завершена",
+      statusCancelled: "Скасована",
+      stats: {
+        totalBookings: "Усього записів",
+        confirmedSessions: "Підтверджено",
+        completedSessions: "Завершено",
+        estimatedRevenue: "Дохід (грн)"
+      }
     },
     psychologists: {
       anna: {
@@ -163,7 +199,7 @@ export const translations = {
     bookSession: "Book Session",
     pricePerHour: "UAH / hr",
     experience: "years exp.",
-    madeBy: "Made with care for MindCare • Kerimli Maybulла",
+    madeBy: "Made with care for MindCare • Kerimli Meybulla",
     login: {
       title: "Therapist Login",
       subtitle: "Enter your Email and password to access your portal (e.g.:",
@@ -176,9 +212,16 @@ export const translations = {
       badge: "Specialist",
       logoutBtn: "Sign Out",
       editSectionTitle: "Profile & Services Editing",
+      nameLabel: "Your Name & Surname",
+      titleLabel: "Specialization / Title",
+      aboutLabel: "About You / Bio",
       priceLabel: "Session Price (UAH / hr)",
-      slotsLabel: "Available Booking Slots",
-      slotPlaceholder: "e.g., Mon, 14:00",
+      topicsLabel: "Specialization (Problem Tags)",
+      slotsLabel: "Schedule & Slot Management",
+      slotDateLabel: "Session Date",
+      slotTimeLabel: "Time",
+      addSlotBtn: "Add Slot",
+      slotPlaceholder: "e.g., 14:00",
       addBtn: "Add",
       saveBtn: "Save Changes",
       bookingsTitle: "Your Bookings",
@@ -186,7 +229,18 @@ export const translations = {
       clientName: "Client:",
       phone: "Phone:",
       slotTime: "Time:",
-      notes: "Notes:"
+      notes: "Notes:",
+      status: "Status:",
+      statusPending: "Pending",
+      statusConfirmed: "Confirmed",
+      statusCompleted: "Completed",
+      statusCancelled: "Cancelled",
+      stats: {
+        totalBookings: "Total Bookings",
+        confirmedSessions: "Confirmed",
+        completedSessions: "Completed",
+        estimatedRevenue: "Revenue (UAH)"
+      }
     },
     psychologists: {
       anna: {

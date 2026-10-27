@@ -92,6 +92,12 @@ function App() {
     );
   };
 
+  const handleUpdateBookingStatus = (bookingId, newStatus) => {
+    setBookings((prev) =>
+      prev.map((b) => (b.id === bookingId ? { ...b, status: newStatus } : b))
+    );
+  };
+
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     setLoginError('');
@@ -198,6 +204,7 @@ function App() {
                   bookings={bookings}
                   onUpdatePsychologist={handleUpdatePsychologist}
                   onLogout={handleLogout}
+                  onUpdateBookingStatus={handleUpdateBookingStatus}
                 />
               ) : (
                 /* Экран ввода логина и пароля */
@@ -291,7 +298,7 @@ function App() {
       {/* Футер */}
       <footer className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-12 border-t border-slate-200 dark:border-slate-800/80 text-center">
         <p className="text-xs text-slate-400 dark:text-slate-500 font-medium">
-          {t('madeBy') || "Сделано с душой для MindCare • Керимли Мейбулла"}
+          {t('madeBy') || "Сделано с душой для MindCare • Михаил Гусейнов"}
         </p>
       </footer>
     </div>

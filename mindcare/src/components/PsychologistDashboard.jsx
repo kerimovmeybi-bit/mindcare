@@ -1,26 +1,54 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { LogOut, Calendar, Plus, X, Save, Clock, User, Phone } from 'lucide-react';
+import { LogOut, Calendar, Plus, X, Save, Clock, User, Phone, Tag, CheckCircle2, DollarSign, Activity, CheckSquare } from 'lucide-react';
 
-export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychologist, onLogout }) => {
+export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychologist, onLogout, onUpdateBookingStatus }) => {
   const { t, theme } = useLanguage();
   const isDark = theme === 'dark';
 
+  const docInfo = t(`psychologists.${currentDoctor.id}`) || {};
+  
+  const [name, setName] = useState(currentDoctor.name || docInfo.name || '');
+  const [title, setTitle] = useState(currentDoctor.title || docInfo.title || '');
+  const [about, setAbout] = useState(currentDoctor.about || docInfo.about || '');
   const [price, setPrice] = useState(currentDoctor.price || 1000);
   const [slots, setSlots] = useState(currentDoctor.availableSlots || []);
-  const [newSlot, setNewSlot] = useState('');
+  const [selectedTopics, setSelectedTopics] = useState(currentDoctor.topics || ['anxiety', 'burnout']);
+
+  // Новые поля для календаря
+  const [slotDate, setSlotDate] = useState('');
+  const [slotTime, setSlotTime] = useState('');
   const [savedMessage, setSavedMessage] = useState(false);
 
-  // Получаем переведенные данные врача
-  const docInfo = t(`psychologists.${currentDoctor.id}`) || {};
-  const name = docInfo.name || currentDoctor.name;
-  const title = docInfo.title || currentDoctor.title;
+  const availableTopics = ['anxiety', 'burnout', 'relationships', 'depression', 'selfEsteem'];
+
+  const toggleTopic = (topicKey) => {
+    if (selectedTopics.includes(topicKey)) {
+      setSelectedTopics(selectedTopics.filter((tKey) => tKey !== topicKey));
+    } else {
+      setSelectedTopics([...selectedTopics, topicKey]);
+    }
+  };
 
   const handleAddSlot = (e) => {
     e.preventDefault();
-    if (!newSlot.trim()) return;
-    setSlots([...slots, newSlot.trim()]);
-    setNewSlot('');
+    let slotString = '';
+    
+    if (slotDate && slotTime) {
+      // Форматируем дату в читаемый формат
+      const dateObj = new Date(slotDate);
+      const dayNames = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+      const formattedDate = `${dayNames[dateObj.getDay()]}, ${dateObj.getDate()}.${dateObj.getMonth() + 1}`;
+      slotString = `${formattedDate} ${slotTime}`;
+    } else if (slotTime) {
+      slotString = slotTime.trim();
+    }
+
+    if (!slotString) return;
+    if (slots.includes(slotString)) return;
+
+    setSlots([...slots, slotString]);
+    setSlotTime('');
   };
 
   const handleRemoveSlot = (slotToRemove) => {
@@ -31,20 +59,28 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
     e.preventDefault();
     const updated = {
       ...currentDoctor,
+      name,
+      title,
+      about,
       price: Number(price),
-      availableSlots: slots
+      availableSlots: slots,
+      topics: selectedTopics
     };
     onUpdatePsychologist(updated);
     setSavedMessage(true);
     setTimeout(() => setSavedMessage(false), 3000);
   };
 
-  // Фильтруем записи именно для этого доктора
   const doctorBookings = bookings.filter((b) => String(b.psychologistId) === String(currentDoctor.id));
+
+  const totalBookingsCount = doctorBookings.length;
+  const confirmedCount = doctorBookings.filter(b => b.status === 'confirmed').length;
+  const completedCount = doctorBookings.filter(b => b.status === 'completed').length;
+  const totalRevenue = (confirmedCount + completedCount) * (Number(price) || 0);
 
   return (
     <div className="space-y-8 animate-fade-in">
-      {/* Верхняя карточка профиля */}
+      {/* Шапка профиля */}
       <div className={`${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6`}>
         <div className="flex items-center gap-5">
           <img 
@@ -73,6 +109,49 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
         </button>
       </div>
 
+      {/* Статистика */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className={`${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border rounded-2xl p-5 flex items-center gap-4 shadow-sm`}>
+          <div className="p-3 bg-teal-500/10 text-teal-500 rounded-xl">
+            <Activity className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-xs text-slate-400 font-medium">{t('dashboard.stats.totalBookings')}</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{totalBookingsCount}</p>
+          </div>
+        </div>
+
+        <div className={`${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border rounded-2xl p-5 flex items-center gap-4 shadow-sm`}>
+          <div className="p-3 bg-blue-500/10 text-blue-500 rounded-xl">
+            <CheckSquare className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-xs text-slate-400 font-medium">{t('dashboard.stats.confirmedSessions')}</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{confirmedCount}</p>
+          </div>
+        </div>
+
+        <div className={`${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border rounded-2xl p-5 flex items-center gap-4 shadow-sm`}>
+          <div className="p-3 bg-emerald-500/10 text-emerald-500 rounded-xl">
+            <CheckCircle2 className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-xs text-slate-400 font-medium">{t('dashboard.stats.completedSessions')}</p>
+            <p className="text-xl font-bold text-slate-900 dark:text-white">{completedCount}</p>
+          </div>
+        </div>
+
+        <div className={`${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border rounded-2xl p-5 flex items-center gap-4 shadow-sm`}>
+          <div className="p-3 bg-amber-500/10 text-amber-500 rounded-xl">
+            <DollarSign className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-xs text-slate-400 font-medium">{t('dashboard.stats.estimatedRevenue')}</p>
+            <p className="text-xl font-bold text-teal-600 dark:text-teal-400">{totalRevenue} грн</p>
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Форма редактирования */}
         <div className={`lg:col-span-2 ${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-3xl p-6 sm:p-8 shadow-sm`}>
@@ -82,6 +161,55 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
           </h3>
 
           <form onSubmit={handleSave} className="space-y-6">
+            {/* Имя и Специализация */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-semibold mb-1.5">
+                  {t('dashboard.nameLabel') || "Ваше имя и фамилия"}
+                </label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                    isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                  }`}
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold mb-1.5">
+                  {t('dashboard.titleLabel') || "Специализация / Титул"}
+                </label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                    isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                  }`}
+                  required
+                />
+              </div>
+            </div>
+
+            {/* О себе */}
+            <div>
+              <label className="block text-xs font-semibold mb-1.5">
+                {t('dashboard.aboutLabel') || "О себе / Биография"}
+              </label>
+              <textarea
+                rows={3}
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+                className={`w-full p-3 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                  isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                }`}
+              />
+            </div>
+
+            {/* Стоимость */}
             <div>
               <label className="block text-xs font-semibold mb-1.5">
                 {t('dashboard.priceLabel') || "Стоимость сессии (грн/час)"}
@@ -97,38 +225,87 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
               />
             </div>
 
+            {/* Теги проблематик */}
             <div>
-              <label className="block text-xs font-semibold mb-1.5">
-                {t('dashboard.slotsLabel') || "Свободные слоты для записи"}
+              <label className=" text-xs font-semibold mb-2 flex items-center gap-1.5">
+                <Tag className="w-4 h-4 text-teal-500" />
+                {t('dashboard.topicsLabel') || "Специализация (теги проблематик)"}
               </label>
-              <div className="flex gap-2 mb-3">
-                <input
-                  type="text"
-                  placeholder={t('dashboard.slotPlaceholder') || "например: Пн, 14:00"}
-                  value={newSlot}
-                  onChange={(e) => setNewSlot(e.target.value)}
-                  className={`flex-1 sm:max-w-xs p-2.5 rounded-xl border text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 ${
-                    isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
-                  }`}
-                />
+              <div className="flex flex-wrap gap-2">
+                {availableTopics.map((topicKey) => {
+                  const isSelected = selectedTopics.includes(topicKey);
+                  return (
+                    <button
+                      key={topicKey}
+                      type="button"
+                      onClick={() => toggleTopic(topicKey)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold border transition-all flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-teal-600 text-white border-teal-600 shadow-sm shadow-teal-600/20'
+                          : isDark
+                            ? 'bg-slate-800 border-slate-700 text-slate-400 hover:border-slate-600 hover:text-slate-200'
+                            : 'bg-slate-100 border-slate-200 text-slate-600 hover:bg-slate-200'
+                      }`}
+                    >
+                      {isSelected ? <CheckCircle2 className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5 opacity-60" />}
+                      {t(`topics.${topicKey}`)}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Календарный блок слотов */}
+            <div className="p-4 rounded-2xl border border-teal-500/20 bg-teal-500/5 space-y-4">
+              <label className="text-xs font-bold text-teal-600 dark:text-teal-400 flex items-center gap-1.5">
+                <Calendar className="w-4 h-4" />
+                {t('dashboard.slotsLabel') || "Управление расписанием и слотами"}
+              </label>
+              
+              <div className="flex flex-wrap gap-2 items-end">
+                <div>
+                  <span className="block text-[11px] font-medium text-slate-500 mb-1">{t('dashboard.slotDateLabel') || "Дата"}</span>
+                  <input
+                    type="date"
+                    value={slotDate}
+                    onChange={(e) => setSlotDate(e.target.value)}
+                    className={`p-2.5 rounded-xl border text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                      isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-900'
+                    }`}
+                  />
+                </div>
+
+                <div>
+                  <span className="block text-[11px] font-medium text-slate-500 mb-1">{t('dashboard.slotTimeLabel') || "Время"}</span>
+                  <input
+                    type="text"
+                    placeholder={t('dashboard.slotPlaceholder') || "14:00"}
+                    value={slotTime}
+                    onChange={(e) => setSlotTime(e.target.value)}
+                    className={`w-28 p-2.5 rounded-xl border text-xs focus:outline-none focus:ring-2 focus:ring-teal-500 ${
+                      isDark ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-slate-200 text-slate-900'
+                    }`}
+                  />
+                </div>
+
                 <button
                   type="button"
                   onClick={handleAddSlot}
-                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all"
+                  className="px-4 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm"
                 >
                   <Plus className="w-4 h-4" />
                   {t('dashboard.addBtn') || "Добавить"}
                 </button>
               </div>
 
-              {/* Список слотов */}
-              <div className="flex flex-wrap gap-2">
+              {/* Список созданных слотов */}
+              <div className="flex flex-wrap gap-2 pt-2">
                 {slots.map((slot) => (
                   <span
                     key={slot}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-teal-50 dark:bg-teal-950/50 border border-teal-200 dark:border-teal-900 text-teal-700 dark:text-teal-300"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-white dark:bg-slate-800 border border-teal-200 dark:border-teal-900/60 text-teal-700 dark:text-teal-300 shadow-sm"
                   >
-                    <Clock className="w-3.5 h-3.5" />
+                    <Clock className="w-3.5 h-3.5 text-teal-500" />
                     {slot}
                     <button
                       type="button"
@@ -172,14 +349,30 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
               {doctorBookings.map((b) => (
                 <div 
                   key={b.id}
-                  className={`p-4 rounded-2xl border text-xs space-y-2 ${
+                  className={`p-4 rounded-2xl border text-xs space-y-2.5 ${
                     isDark ? 'bg-slate-800/60 border-slate-700' : 'bg-slate-50 border-slate-200'
                   }`}
                 >
-                  <p className="flex items-center gap-2 font-semibold text-teal-600 dark:text-teal-400">
-                    <Clock className="w-3.5 h-3.5" />
-                    {b.slot}
-                  </p>
+                  <div className="flex items-center justify-between gap-2 border-b border-slate-200 dark:border-slate-700 pb-2">
+                    <p className="flex items-center gap-1.5 font-semibold text-teal-600 dark:text-teal-400">
+                      <Clock className="w-3.5 h-3.5" />
+                      {b.slot}
+                    </p>
+                    {onUpdateBookingStatus && (
+                      <select
+                        value={b.status || 'pending'}
+                        onChange={(e) => onUpdateBookingStatus(b.id, e.target.value)}
+                        className={`text-[11px] font-semibold px-2 py-1 rounded-lg border focus:outline-none ${
+                          isDark ? 'bg-slate-900 border-slate-700 text-slate-200' : 'bg-white border-slate-200 text-slate-700'
+                        }`}
+                      >
+                        <option value="pending">{t('dashboard.statusPending') || "В ожидании"}</option>
+                        <option value="confirmed">{t('dashboard.statusConfirmed') || "Подтверждена"}</option>
+                        <option value="completed">{t('dashboard.statusCompleted') || "Завершена"}</option>
+                        <option value="cancelled">{t('dashboard.statusCancelled') || "Отменена"}</option>
+                      </select>
+                    )}
+                  </div>
                   <p className="flex items-center gap-2">
                     <User className="w-3.5 h-3.5 text-slate-400" />
                     <strong>{t('dashboard.clientName') || "Клиент:"}</strong> {b.clientName}
