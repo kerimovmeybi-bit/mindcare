@@ -18,11 +18,25 @@ export const translations = {
       selfEsteem: "Самооценка"
     },
     header: {
+      home: "Главная",
       catalog: "Каталог",
       doctorCabinet: "Кабинет врача",
       clientCabinet: "Кабинет клиента",
-      clientLogin: "Вход для клиента",
+      clientLogin: "Кабинет клиента",
       register: "Регистрация"
+    },
+    hero: {
+      badge: "Ваше пространство психологического благополучия",
+      title: "Найдите своего психолога для гармонии и поддержки",
+      subtitle: "MindCare — это профессиональная платформа, объединяющая проверенных специалистов. Получайте бережную помощь онлайн, записывайтесь на сессии в удобное время и возвращайте душевное равновесие.",
+      exploreBtn: "Смотреть каталог психологов",
+      registerBtn: "Зарегистрироваться",
+      feature1Title: "Проверенные эксперты",
+      feature1Desc: "Все специалисты проходят строгую верификацию дипломов, квалификации и практического опыта.",
+      feature2Title: "Удобная запись",
+      feature2Desc: "Выбирайте свободное время и бронируйте сессии в несколько кликов без лишних звонков и ожиданий.",
+      feature3Title: "Конфиденциальность",
+      feature3Desc: "Мы гарантируем абсолютную безопасность ваших персональных данных и конфиденциальность сессий."
     },
     card: {
       searchPlaceholder: "Поиск по имени или проблематике...",
@@ -80,6 +94,15 @@ export const translations = {
       certificatesLabel: "Дипломы и сертификаты",
       certificatePlaceholder: "например: Сертификат по КПТ (Ассоциация КПТ, 2023)",
       addCertificateBtn: "Добавить сертификат"
+    },
+    doctorDashboard: {
+      loginPrompt: "Чтобы управлять своими сессиями и расписанием, пожалуйста, войдите в систему.",
+      loginBtn: "Войти в кабинет врача"
+    },
+    clientDashboardNotLogged: {
+      title: "Личный кабинет клиента",
+      prompt: "Чтобы просматривать и управлять своими записями на сессии, пожалуйста, войдите в систему.",
+      loginBtn: "Войти в кабинет клиента"
     },
     clientDashboard: {
       editProfile: "Редактировать профиль",
@@ -166,11 +189,25 @@ export const translations = {
       selfEsteem: "Самооцінка"
     },
     header: {
+      home: "Головна",
       catalog: "Каталог",
       doctorCabinet: "Кабінет лікаря",
       clientCabinet: "Кабінет клієнта",
-      clientLogin: "Вхід для клієнта",
+      clientLogin: "Кабінет клієнта",
       register: "Реєстрація"
+    },
+    hero: {
+      badge: "Ваш простір психологічного благополуччя",
+      title: "Знайдіть свого психолога для гармонії та підтримки",
+      subtitle: "MindCare — це професійна платформа, що об'єднує перевірених фахівців. Отримуйте дбайливу допомогу онлайн, записуйтеся на сесії у зручний час та повертайте душевну рівновагу.",
+      exploreBtn: "Дивитися каталог психологів",
+      registerBtn: "Зареєструватися",
+      feature1Title: "Перевірені експерти",
+      feature1Desc: "Усі фахівці проходять сувору верифікацію дипломів, кваліфікації та практичного досвіду.",
+      feature2Title: "Зручний запис",
+      feature2Desc: "Обирайте вільний час та бронюйте сесії в кілька кліків без зайвих дзвінків та очікувань.",
+      feature3Title: "Конфіденційність",
+      feature3Desc: "Ми гарантуємо абсолютну безпеку ваших персональних даних та конфіденційність сесій."
     },
     card: {
       searchPlaceholder: "Пошук за ім'ям або проблематикою...",
@@ -228,6 +265,15 @@ export const translations = {
       certificatesLabel: "Дипломи та сертифікати",
       certificatePlaceholder: "наприклад: Сертифікат з КПТ (Асоціація КПТ, 2023)",
       addCertificateBtn: "Додати сертифікат"
+    },
+    doctorDashboard: {
+      loginPrompt: "Щоб керувати своїми сесіями та розкладом, будь ласка, увійдіть до системи.",
+      loginBtn: "Увійти до кабінету лікаря"
+    },
+    clientDashboardNotLogged: {
+      title: "Особистий кабінет клієнта",
+      prompt: "Щоб переглядати та керувати своїми записами на сесії, будь ласка, увійдіть до системи.",
+      loginBtn: "Увійти в кабінет клієнта"
     },
     clientDashboard: {
       editProfile: "Редагувати профіль",
@@ -314,11 +360,25 @@ export const translations = {
       selfEsteem: "Self-esteem"
     },
     header: {
+      home: "Home",
       catalog: "Catalog",
       doctorCabinet: "Doctor's Cabinet",
       clientCabinet: "Client Cabinet",
-      clientLogin: "Client Login",
+      clientLogin: "Client Cabinet",
       register: "Sign Up"
+    },
+    hero: {
+      badge: "Your space for psychological well-being",
+      title: "Find your therapist for harmony and support",
+      subtitle: "MindCare is a professional platform connecting verified specialists. Get gentle online support, book sessions at your convenience, and restore your inner peace.",
+      exploreBtn: "Browse Therapists",
+      registerBtn: "Sign Up",
+      feature1Title: "Verified Experts",
+      feature1Desc: "All specialists undergo strict verification of diplomas, qualifications, and practical experience.",
+      feature2Title: "Easy Booking",
+      feature2Desc: "Choose available time slots and book sessions in a few clicks without unnecessary calls.",
+      feature3Title: "Confidentiality",
+      feature3Desc: "We guarantee absolute security of your personal data and session privacy."
     },
     card: {
       searchPlaceholder: "Search by name or topic...",
@@ -376,6 +436,15 @@ export const translations = {
       certificatesLabel: "Diplomas and Certificates",
       certificatePlaceholder: "e.g., Certificate in CBT (CBT Association, 2023)",
       addCertificateBtn: "Add Certificate"
+    },
+    doctorDashboard: {
+      loginPrompt: "To manage your sessions and schedule, please sign in.",
+      loginBtn: "Sign in to Doctor's Cabinet"
+    },
+    clientDashboardNotLogged: {
+      title: "Client Dashboard",
+      prompt: "To view and manage your session bookings, please sign in.",
+      loginBtn: "Sign in to Client Dashboard"
     },
     clientDashboard: {
       editProfile: "Edit Profile",

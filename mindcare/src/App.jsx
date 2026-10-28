@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
+import { HeroHome } from './components/HeroHome';
 import { initialPsychologists } from './data/psychologists';
 import { PsychologistCard } from './components/PsychologistCard';
 import { BookingModal } from './components/BookingModal';
@@ -8,11 +9,11 @@ import { ClientDashboard } from './components/ClientDashboard';
 import { NewsSection } from './components/NewsSection';
 import { RegisterModal } from './components/RegisterModal';
 import { useLanguage } from './context/LanguageContext';
-import { Search, Lock, AlertCircle, UserCheck, Stethoscope } from 'lucide-react';
+import { Search, Lock, AlertCircle, UserCheck, Stethoscope, User } from 'lucide-react';
 
 function App() {
   const [role, setRole] = useState('client'); // 'client' | 'psychologist'
-  const [isCatalogView, setIsCatalogView] = useState(false); // Флаг просмотра каталога для клиента
+  const [activeTab, setActiveTab] = useState('home'); // 'home' | 'catalog' | 'client-cabinet' | 'doctor-cabinet'
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('all');
   const [selectedDoctorForBooking, setSelectedDoctorForBooking] = useState(null);
@@ -121,11 +122,12 @@ function App() {
       setPsychologists((prev) => [...prev, newUser]);
       setLoggedInDoctorId(newUser.id);
       setRole('psychologist');
+      setActiveTab('doctor-cabinet');
     } else if (newUser.role === 'client') {
       setClients((prev) => [...prev, newUser]);
       setLoggedInClientId(newUser.id);
       setRole('client');
-      setIsCatalogView(false);
+      setActiveTab('client-cabinet');
     }
   };
 
@@ -140,7 +142,7 @@ function App() {
       setClientLoginEmail('');
       setClientLoginPassword('');
       setIsClientLoginOpen(false);
-      setIsCatalogView(false);
+      setActiveTab('client-cabinet');
     } else {
       setClientLoginError(t('clientLoginError') || 'Неверный email или пароль клиента');
     }
@@ -157,6 +159,7 @@ function App() {
       setLoginEmail('');
       setLoginPassword('');
       setIsDoctorLoginOpen(false);
+      setActiveTab('doctor-cabinet');
     } else {
       setLoginError(t('login.error') || 'Неверный email или пароль специалиста');
     }
@@ -166,93 +169,110 @@ function App() {
   const currentClient = clients.find((c) => c.id === loggedInClientId);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col justify-between">
       <div>
         <Header 
           currentRole={role} 
-          isCatalogView={isCatalogView}
-          setRole={(newRole) => {
-            setRole(newRole);
-            if (newRole === 'client') {
-              setIsCatalogView(true);
-            }
-            if (newRole === 'psychologist' && !currentDoctor) {
-              setIsDoctorLoginOpen(true);
-            }
-          }} 
-          onOpenRegister={() => setIsRegisterOpen(true)} 
+          setRole={setRole}
           isClientLoggedIn={!!currentClient}
           onOpenClientLogin={() => {
             setRole('client');
-            if (currentClient) {
-              setIsCatalogView(false);
-            } else {
-              setIsClientLoginOpen(true);
-            }
+            setActiveTab('client-cabinet');
           }}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
         />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {role === 'client' ? (
-            currentClient && !isCatalogView ? (
-              <ClientDashboard 
-                currentClient={currentClient}
-                bookings={bookings}
-                onLogout={() => {
-                  setLoggedInClientId(null);
-                  setIsCatalogView(true);
-                }}
-                onUpdateBookingStatus={handleUpdateBookingStatus}
-                onUpdateClient={handleUpdateClient}
-              />
-            ) : (
-              <div>
-                <div className="mb-8 space-y-4">
-                  <div className="relative max-w-xl">
-                    <Search className="absolute left-4 top-3.5 w-5 h-5 text-slate-400" />
-                    <input
-                      type="text"
-                      placeholder={t('searchPlaceholder') || "Поиск по имени или проблематике..."}
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm"
-                    />
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {topicsList.map((topicKey) => (
-                      <button
-                        key={topicKey}
-                        onClick={() => setSelectedTopic(topicKey)}
-                        className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                          selectedTopic === topicKey
-                            ? 'bg-teal-600 text-white shadow-sm'
-                            : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300'
-                        }`}
-                      >
-                        {t(`topics.${topicKey}`) || topicKey}
-                      </button>
-                    ))}
-                  </div>
+            activeTab === 'client-cabinet' ? (
+              currentClient ? (
+                /* Личный кабинет авторизованного клиента */
+                <ClientDashboard 
+                  currentClient={currentClient}
+                  bookings={bookings}
+                  onLogout={() => {
+                    setLoggedInClientId(null);
+                    setActiveTab('home');
+                  }}
+                  onUpdateBookingStatus={handleUpdateBookingStatus}
+                  onUpdateClient={handleUpdateClient}
+                />
+              ) : (
+                /* Заглушка для неавторизованного клиента (как у врача на 2 скрине) */
+                <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl mx-auto p-8 shadow-sm">
+                  <User className="w-12 h-12 text-teal-600 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold mb-2">{t('clientDashboardNotLogged.title') || "Личный кабинет клиента"}</h2>
+                  <p className="text-xs text-slate-500 mb-6">{t('clientDashboardNotLogged.prompt') || "Чтобы просматривать и управлять своими записями на сессии, пожалуйста, войдите в систему."}</p>
+                  <button
+                    onClick={() => setIsClientLoginOpen(true)}
+                    className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/30 transition-all"
+                  >
+                    {t('clientDashboardNotLogged.loginBtn') || "Войти в кабинет клиента"}
+                  </button>
                 </div>
+              )
+            ) : (
+              /* Главная страница с Hero-блоком сверху и каталогом ниже */
+              <div className="space-y-16">
+                <HeroHome 
+                  onExploreCatalog={() => {
+                    setActiveTab('catalog');
+                    const catalogElement = document.getElementById('psychologists-catalog');
+                    catalogElement?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  onOpenRegister={() => setIsRegisterOpen(true)}
+                />
 
-                {filteredPsychologists.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {filteredPsychologists.map((psychologist) => (
-                      <PsychologistCard 
-                        key={psychologist.id} 
-                        psychologist={psychologist} 
-                        onBook={(doc) => setSelectedDoctorForBooking(doc)} 
+                <div id="psychologists-catalog" className="pt-8 border-t border-slate-200 dark:border-slate-800">
+                  <div className="mb-8 space-y-4">
+                    <h2 className="text-2xl font-bold tracking-tight">Наши специалисты</h2>
+                    <div className="relative max-w-xl">
+                      <Search className="absolute left-4 top-3.5 w-5 h-5 text-slate-400" />
+                      <input
+                        type="text"
+                        placeholder={t('searchPlaceholder') || "Поиск по имени или проблематике..."}
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl pl-12 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 shadow-sm"
                       />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="text-center py-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
-                    <p className="text-slate-500">Ничего не найдено.</p>
-                  </div>
-                )}
+                    </div>
 
-                <NewsSection />
+                    <div className="flex flex-wrap gap-2">
+                      {topicsList.map((topicKey) => (
+                        <button
+                          key={topicKey}
+                          onClick={() => setSelectedTopic(topicKey)}
+                          className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                            selectedTopic === topicKey
+                              ? 'bg-teal-600 text-white shadow-sm'
+                              : 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300'
+                          }`}
+                        >
+                          {t(`topics.${topicKey}`) || topicKey}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {filteredPsychologists.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {filteredPsychologists.map((psychologist) => (
+                        <PsychologistCard 
+                          key={psychologist.id} 
+                          psychologist={psychologist} 
+                          onBook={(doc) => setSelectedDoctorForBooking(doc)} 
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
+                      <p className="text-slate-500">Ничего не найдено.</p>
+                    </div>
+                  )}
+
+                  <NewsSection />
+                </div>
               </div>
             )
           ) : (
@@ -263,19 +283,22 @@ function App() {
                   currentDoctor={currentDoctor}
                   bookings={bookings}
                   onUpdatePsychologist={(doc) => setPsychologists(prev => prev.map(p => p.id === doc.id ? doc : p))}
-                  onLogout={() => setLoggedInDoctorId(null)}
+                  onLogout={() => {
+                    setLoggedInDoctorId(null);
+                    setActiveTab('home');
+                  }}
                   onUpdateBookingStatus={handleUpdateBookingStatus}
                 />
               ) : (
                 <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl mx-auto p-8 shadow-sm">
                   <Stethoscope className="w-12 h-12 text-teal-600 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold mb-2">{t('psychologistView') || "Кабинет специалиста"}</h2>
-                  <p className="text-xs text-slate-500 mb-6">Чтобы управлять своими сессиями и расписанием, пожалуйста, войдите в систему.</p>
+                  <p className="text-xs text-slate-500 mb-6">{t('doctorDashboard.loginPrompt') || "Чтобы управлять своими сессиями и расписанием, пожалуйста, войдите в систему."}</p>
                   <button
                     onClick={() => setIsDoctorLoginOpen(true)}
                     className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/30 transition-all"
                   >
-                    Войти в кабинет врача
+                    {t('doctorDashboard.loginBtn') || "Войти в кабинет врача"}
                   </button>
                 </div>
               )}
