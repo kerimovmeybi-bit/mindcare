@@ -5,12 +5,30 @@ export const translations = {
     psychologistView: "Кабинет психолога",
     searchPlaceholder: "Поиск по имени или проблематике...",
     allTopics: "Все темы",
+    clientLoginTitle: "Вход в кабинет клиента",
+    clientNoAccount: "Нет аккаунта? Зарегистрироваться",
+    doctorNoAccount: "Нет аккаунта специалиста? Зарегистрироваться",
+    clientCabinetBadge: "Личный кабинет клиента",
     topics: {
+      all: "Все темы",
       anxiety: "Тревожность",
       burnout: "Выгорание",
       relationships: "Отношения",
       depression: "Депрессия",
       selfEsteem: "Самооценка"
+    },
+    header: {
+      catalog: "Каталог",
+      doctorCabinet: "Кабинет врача",
+      clientCabinet: "Кабинет клиента",
+      clientLogin: "Вход для клиента",
+      register: "Регистрация"
+    },
+    card: {
+      searchPlaceholder: "Поиск по имени или проблематике...",
+      price: "Стоимость",
+      perHour: "грн / час",
+      bookSession: "Записаться на сессию"
     },
     bookSession: "Записаться на сессию",
     pricePerHour: "грн / час",
@@ -56,7 +74,45 @@ export const translations = {
         confirmedSessions: "Подтверждено",
         completedSessions: "Завершено",
         estimatedRevenue: "Доход (грн)"
-      }
+      },
+      avatarLabel: "Ссылка на аватар (URL)",
+      uploadAvatarBtn: "Загрузить фото",
+      certificatesLabel: "Дипломы и сертификаты",
+      certificatePlaceholder: "например: Сертификат по КПТ (Ассоциация КПТ, 2023)",
+      addCertificateBtn: "Добавить сертификат"
+    },
+    clientDashboard: {
+      editProfile: "Редактировать профиль",
+      editTitle: "Редактирование личных данных",
+      nameLabel: "Имя и Фамилия",
+      phoneLabel: "Телефон",
+      avatarLabel: "Загрузить аватарку",
+      chooseFile: "Выберите файл...",
+      bookingsTitle: "Мои записи на сессии",
+      doctorPrefix: "Психолог",
+      cancelBtn: "Отменить",
+      noBookings: "У вас пока нет активных записей.",
+      noBookingsHint: "Выберите психолога на главной странице и запишитесь на первую сессию."
+    },
+    register: {
+      title: "Присоединяйтесь к MindCare",
+      subtitle: "Выберите, в качестве кого вы хотите зарегистрироваться:",
+      clientTitle: "Я клиент",
+      clientSubtitle: "Ищу квалифицированного психолога",
+      doctorTitle: "Я психолог / специалист",
+      doctorSubtitle: "Хочу разместить профиль и вести прием",
+      backLink: "← Изменить роль",
+      clientFormTitle: "Регистрация клиента",
+      doctorFormTitle: "Регистрация специалиста",
+      nameLabel: "Имя и Фамилия",
+      namePlaceholder: "Анна Смирнова",
+      emailLabel: "Email",
+      passwordLabel: "Пароль",
+      phoneLabel: "Телефон",
+      titleLabel: "Специализация / Направление",
+      titlePlaceholder: "Клинический психолог, КПТ-терапевт",
+      priceLabel: "Стоимость сессии (грн/час)",
+      submitBtn: "Зарегистрироваться"
     },
     psychologists: {
       anna: {
@@ -97,12 +153,30 @@ export const translations = {
     psychologistView: "Кабінет психолога",
     searchPlaceholder: "Пошук за ім'ям або проблематикою...",
     allTopics: "Усі теми",
+    clientLoginTitle: "Вхід в кабінет клієнта",
+    clientNoAccount: "Немає облікового запису? Зареєструватися",
+    doctorNoAccount: "Немає облікового запису фахівця? Зареєструватися",
+    clientCabinetBadge: "Особистий кабінет клієнта",
     topics: {
+      all: "Усі теми",
       anxiety: "Тривожність",
       burnout: "Вигорання",
       relationships: "Стосунки",
       depression: "Депресія",
       selfEsteem: "Самооцінка"
+    },
+    header: {
+      catalog: "Каталог",
+      doctorCabinet: "Кабінет лікаря",
+      clientCabinet: "Кабінет клієнта",
+      clientLogin: "Вхід для клієнта",
+      register: "Реєстрація"
+    },
+    card: {
+      searchPlaceholder: "Пошук за ім'ям або проблематикою...",
+      price: "Вартість",
+      perHour: "грн / год",
+      bookSession: "Записатися на сесію"
     },
     bookSession: "Записатися на сесію",
     pricePerHour: "грн / год",
@@ -148,7 +222,45 @@ export const translations = {
         confirmedSessions: "Підтверджено",
         completedSessions: "Завершено",
         estimatedRevenue: "Дохід (грн)"
-      }
+      },
+      avatarLabel: "Посилання на аватар (URL)",
+      uploadAvatarBtn: "Завантажити фото",
+      certificatesLabel: "Дипломи та сертифікати",
+      certificatePlaceholder: "наприклад: Сертифікат з КПТ (Асоціація КПТ, 2023)",
+      addCertificateBtn: "Додати сертифікат"
+    },
+    clientDashboard: {
+      editProfile: "Редагувати профіль",
+      editTitle: "Редагування особистих даних",
+      nameLabel: "Ім'я та Прізвище",
+      phoneLabel: "Телефон",
+      avatarLabel: "Завантажити аватарку",
+      chooseFile: "Виберіть файл...",
+      bookingsTitle: "Мої записи на сесії",
+      doctorPrefix: "Психолог",
+      cancelBtn: "Скасувати",
+      noBookings: "У вас поки немає активних записів.",
+      noBookingsHint: "Виберіть психолога на головній сторінці та запишіться на першу сесію."
+    },
+    register: {
+      title: "Приєднуйтесь до MindCare",
+      subtitle: "Оберіть, в якості кого ви хочете зареєструватися:",
+      clientTitle: "Я клієнт",
+      clientSubtitle: "Шукаю кваліфікованого психолога",
+      doctorTitle: "Я психолог / фахівець",
+      doctorSubtitle: "Хочу розмістити профіль та вести прийом",
+      backLink: "← Змінити роль",
+      clientFormTitle: "Реєстрація клієнта",
+      doctorFormTitle: "Реєстрація фахівця",
+      nameLabel: "Ім'я та Прізвище",
+      namePlaceholder: "Ганна Смирнова",
+      emailLabel: "Email",
+      passwordLabel: "Пароль",
+      phoneLabel: "Телефон",
+      titleLabel: "Спеціалізація / Напрямок",
+      titlePlaceholder: "Клінічний психолог, КПТ-терапевт",
+      priceLabel: "Вартість сесії (грн/год)",
+      submitBtn: "Зареєструватися"
     },
     psychologists: {
       anna: {
@@ -189,12 +301,30 @@ export const translations = {
     psychologistView: "Therapist Portal",
     searchPlaceholder: "Search by name or topic...",
     allTopics: "All Topics",
+    clientLoginTitle: "Client Login",
+    clientNoAccount: "Don't have an account? Sign up",
+    doctorNoAccount: "Don't have a specialist account? Sign up",
+    clientCabinetBadge: "Client Dashboard",
     topics: {
+      all: "All Topics",
       anxiety: "Anxiety",
       burnout: "Burnout",
       relationships: "Relationships",
       depression: "Depression",
       selfEsteem: "Self-esteem"
+    },
+    header: {
+      catalog: "Catalog",
+      doctorCabinet: "Doctor's Cabinet",
+      clientCabinet: "Client Cabinet",
+      clientLogin: "Client Login",
+      register: "Sign Up"
+    },
+    card: {
+      searchPlaceholder: "Search by name or topic...",
+      price: "Price",
+      perHour: "UAH / hr",
+      bookSession: "Book a session"
     },
     bookSession: "Book Session",
     pricePerHour: "UAH / hr",
@@ -240,7 +370,45 @@ export const translations = {
         confirmedSessions: "Confirmed",
         completedSessions: "Completed",
         estimatedRevenue: "Revenue (UAH)"
-      }
+      },
+      avatarLabel: "Avatar URL",
+      uploadAvatarBtn: "Upload photo",
+      certificatesLabel: "Diplomas and Certificates",
+      certificatePlaceholder: "e.g., Certificate in CBT (CBT Association, 2023)",
+      addCertificateBtn: "Add Certificate"
+    },
+    clientDashboard: {
+      editProfile: "Edit Profile",
+      editTitle: "Edit Personal Data",
+      nameLabel: "Full Name",
+      phoneLabel: "Phone",
+      avatarLabel: "Upload Avatar",
+      chooseFile: "Choose file...",
+      bookingsTitle: "My Session Bookings",
+      doctorPrefix: "Therapist",
+      cancelBtn: "Cancel",
+      noBookings: "You have no active bookings yet.",
+      noBookingsHint: "Choose a therapist on the main page and book your first session."
+    },
+    register: {
+      title: "Join MindCare",
+      subtitle: "Choose how you would like to register:",
+      clientTitle: "I am a client",
+      clientSubtitle: "Looking for a qualified psychologist",
+      doctorTitle: "I am a therapist / specialist",
+      doctorSubtitle: "I want to list my profile and take bookings",
+      backLink: "← Change role",
+      clientFormTitle: "Client Registration",
+      doctorFormTitle: "Therapist Registration",
+      nameLabel: "Full Name",
+      namePlaceholder: "Anna Smirnova",
+      emailLabel: "Email",
+      passwordLabel: "Password",
+      phoneLabel: "Phone",
+      titleLabel: "Specialization / Title",
+      titlePlaceholder: "Clinical Psychologist, CBT Therapist",
+      priceLabel: "Session Price (UAH / hr)",
+      submitBtn: "Register"
     },
     psychologists: {
       anna: {

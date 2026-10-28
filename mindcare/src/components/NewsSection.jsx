@@ -4,7 +4,7 @@ import { newsData } from '../data/news';
 import { Calendar, ArrowRight, X } from 'lucide-react';
 
 export const NewsSection = () => {
-  const { lang, theme } = useLanguage();
+  const { language: lang, theme } = useLanguage();
   const isDark = theme === 'dark';
   const [selectedArticle, setSelectedArticle] = useState(null);
 
@@ -45,20 +45,20 @@ export const NewsSection = () => {
               <div className="h-48 overflow-hidden">
                 <img 
                   src={item.image} 
-                  alt={item.title[lang]} 
+                  alt={item.title[lang] || item.title.ru} 
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
               <div className="p-6">
                 <div className="flex items-center gap-1.5 text-xs text-teal-600 dark:text-teal-400 font-semibold mb-2">
                   <Calendar className="w-3.5 h-3.5" />
-                  {item.date[lang]}
+                  {item.date[lang] || item.date.ru}
                 </div>
                 <h3 className={`font-bold text-lg mb-2 line-clamp-2 ${isDark ? 'text-white' : 'text-slate-800'}`}>
-                  {item.title[lang]}
+                  {item.title[lang] || item.title.ru}
                 </h3>
                 <p className={`text-sm line-clamp-3 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                  {item.excerpt[lang]}
+                  {item.excerpt[lang] || item.excerpt.ru}
                 </p>
               </div>
             </div>
@@ -87,29 +87,29 @@ export const NewsSection = () => {
 
             <div className="mb-4">
               <span className="text-xs text-teal-600 dark:text-teal-400 font-semibold">
-                {selectedArticle.date[lang]}
+                {selectedArticle.date[lang] || selectedArticle.date.ru}
               </span>
               <h2 className="text-2xl font-bold mt-1 mb-4">
-                {selectedArticle.title[lang]}
+                {selectedArticle.title[lang] || selectedArticle.title.ru}
               </h2>
             </div>
 
             <div className="h-64 rounded-2xl overflow-hidden mb-6">
               <img 
                 src={selectedArticle.image} 
-                alt={selectedArticle.title[lang]} 
+                alt={selectedArticle.title[lang] || selectedArticle.title.ru} 
                 className="w-full h-full object-cover"
               />
             </div>
 
             <div className={`prose max-w-none text-sm leading-relaxed whitespace-pre-line ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              {selectedArticle.content[lang]}
+              {selectedArticle.content[lang] || selectedArticle.content.ru}
             </div>
 
             <div className="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2.5 rounded-xl transition-all shadow-md shadow-teal-600/20"
+                className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py.5 rounded-xl transition-all shadow-md shadow-teal-600/20"
               >
                 {closeText[lang] || closeText.ru}
               </button>

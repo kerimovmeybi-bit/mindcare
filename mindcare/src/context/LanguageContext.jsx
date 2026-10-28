@@ -4,11 +4,17 @@ import { translations } from '../data/translations';
 const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('ru');
+  const [language, setLanguage] = useState(() => {
+    return localStorage.getItem('mindcare_lang') || 'ru';
+  });
   
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('mindcare_theme') || 'light';
   });
+
+  useEffect(() => {
+    localStorage.setItem('mindcare_lang', language);
+  }, [language]);
 
   useEffect(() => {
     localStorage.setItem('mindcare_theme', theme);
@@ -27,7 +33,7 @@ export const LanguageProvider = ({ children }) => {
 
   const t = (keyPath) => {
     const keys = keyPath.split('.');
-    let current = translations[lang];
+    let current = translations[language];
     for (const key of keys) {
       if (!current || !current[key]) return keyPath;
       current = current[key];
@@ -36,7 +42,7 @@ export const LanguageProvider = ({ children }) => {
   };
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t, theme, toggleTheme }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, theme, toggleTheme, setTheme }}>
       {children}
     </LanguageContext.Provider>
   );
