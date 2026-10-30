@@ -20,6 +20,8 @@ export const translations = {
     header: {
       home: "Главная",
       catalog: "Каталог",
+      courses: "Курсы",
+      news: "Новости",
       doctorCabinet: "Кабинет врача",
       clientCabinet: "Кабинет клиента",
       clientLogin: "Кабинет клиента",
@@ -37,6 +39,79 @@ export const translations = {
       feature2Desc: "Выбирайте свободное время и бронируйте сессии в несколько кликов без лишних звонков и ожиданий.",
       feature3Title: "Конфиденциальность",
       feature3Desc: "Мы гарантируем абсолютную безопасность ваших персональных данных и конфиденциальность сессий."
+    },
+    courses: {
+      badge: "Обучение и саморазвитие",
+      title: "Курсы и психологические практикумы",
+      subtitle: "Программы самопомощи и видеокурсы от экспертов платформы MindCare",
+      priceLabel: "Стоимость",
+      moreBtn: "Подробнее",
+      currency: "грн",
+      teacherLabel: "Преподаватель курса",
+      programLabel: "О программе курса",
+      enrollBtn: "Записаться на курс",
+      badges: {
+        popular: "Популярное",
+        workshop: "Практикум",
+        intensive: "Интенсив",
+        new: "Новинка",
+        deepWork: "Глубокая работа",
+        trend: "Тренд"
+      },
+      durations: {
+        weeks3: "3 недели",
+        weeks4: "4 недели",
+        weeks5: "5 недель",
+        weeks6: "6 недель"
+      },
+      course1: {
+        title: "Антистресс: управление эмоциями и выгоранием",
+        desc: "Практический курс по снижению уровня тревожности, работе с фоновым стрессом и восстановлению личной энергии.",
+        fullDesc: "Этот курс создан для тех, кто чувствует хроническую усталость, истощение и постоянную тревогу. Вы освоите научно доказанные техники саморегуляции, научитесь вовремя замечать признаки выгорания и возвращать ресурсное состояние.",
+        author: "Анна Смирнова",
+        authorTitle: "Клинический психолог, КПТ-терапевт",
+        lessons: "12 уроков"
+      },
+      course2: {
+        title: "Искусство здоровых границ и уверенности",
+        desc: "Научитесь говорить «нет» без чувства вины, защищать свое личное пространство и выстраивать гармоничные отношения.",
+        fullDesc: "Практический практикум по отстаиванию личных границ. Помогает избавиться от синдрома «удобного человека», научиться экологично выражать агрессию и ценить себя.",
+        author: "Елена Ковальчук",
+        authorTitle: "Практический психолог",
+        lessons: "9 уроков"
+      },
+      course3: {
+        title: "Отношения в паре: от конфликтов к близости",
+        desc: "Пошаговая программа для пар и тех, кто хочет преодолеть кризисы, улучшить коммуникацию и вернуть доверие.",
+        fullDesc: "Глубокая программа для работы над отношениями. Разбираем причины частых ссор, учимся слышать друг друга без обвинений и восстанавливаем эмоциональную близость.",
+        author: "София Мельник",
+        authorTitle: "Семейный и детский психолог",
+        lessons: "18 уроков"
+      },
+      course4: {
+        title: "Победи свой страх: работа с фобиями и паникой",
+        desc: "Глубокая проработка панических атак, страхов и тревожных расстройств под руководством экспертов.",
+        fullDesc: "Пошаговый курс преодоления панических расстройств. Вы узнаете о природе страха, освоите дыхательные протоколы и вернете уверенность в безопасности своего тела.",
+        author: "Максим Шевченко",
+        authorTitle: "Психотерапевт, гештальт-подход",
+        lessons: "15 уроков"
+      },
+      course5: {
+        title: "Внутренний ребёнок: исцеление травм прошлого",
+        desc: "Психотерапевтический курс для работы с детскими обидами, сценариями и обретения внутренней опоры.",
+        fullDesc: "Мягкая терапевтическая работа с детскими воспоминаниями и травмами. Позволяет закрыть гештальты прошлого и перестать опираться на деструктивные сценарии.",
+        author: "Дмитрий Васильев",
+        authorTitle: "Психоаналитик, сомнолог",
+        lessons: "14 уроков"
+      },
+      course6: {
+        title: "Эмоциональный интеллект и лидерство",
+        desc: "Как понимать свои эмоции, считывать состояние окружающих и эффективно управлять коммуникацией.",
+        fullDesc: "Курс по развитию эмоционального интеллекта (EQ). Помогает управлять своими реакциями в стрессовых ситуациях, считывать скрытые мотивы людей и грамотно руководить.",
+        author: "Артем Бондаренко",
+        authorTitle: "Карьерный коуч, психолог",
+        lessons: "10 уроков"
+      }
     },
     card: {
       searchPlaceholder: "Поиск по имени или проблематике...",
@@ -101,7 +176,7 @@ export const translations = {
     },
     clientDashboardNotLogged: {
       title: "Личный кабинет клиента",
-      prompt: "Чтобы просматривать и управлять своими записями на сессии, пожалуйста, войдите в систему.",
+      prompt: "Чтобы просматривать и управлять своими записями на сессию, пожалуйста, войдите в систему.",
       loginBtn: "Войти в кабинет клиента"
     },
     clientDashboard: {
@@ -191,6 +266,8 @@ export const translations = {
     header: {
       home: "Головна",
       catalog: "Каталог",
+      courses: "Курси",
+      news: "Новини",
       doctorCabinet: "Кабінет лікаря",
       clientCabinet: "Кабінет клієнта",
       clientLogin: "Кабінет клієнта",
@@ -208,6 +285,79 @@ export const translations = {
       feature2Desc: "Обирайте вільний час та бронюйте сесії в кілька кліків без зайвих дзвінків та очікувань.",
       feature3Title: "Конфіденційність",
       feature3Desc: "Ми гарантуємо абсолютну безпеку ваших персональних даних та конфіденційність сесій."
+    },
+    courses: {
+      badge: "Навчання та саморозвиток",
+      title: "Курси та психологічні практикуми",
+      subtitle: "Програми самодопомоги та відеокурси від експертів платформи MindCare",
+      priceLabel: "Вартість",
+      moreBtn: "Детальніше",
+      currency: "грн",
+      teacherLabel: "Викладач курсу",
+      programLabel: "Про програму курсу",
+      enrollBtn: "Записатися на курс",
+      badges: {
+        popular: "Популярне",
+        workshop: "Практикум",
+        intensive: "Інтенсив",
+        new: "Новинка",
+        deepWork: "Глибока робота",
+        trend: "Тренд"
+      },
+      durations: {
+        weeks3: "3 тижні",
+        weeks4: "4 тижні",
+        weeks5: "5 тижнів",
+        weeks6: "6 тижнів"
+      },
+      course1: {
+        title: "Антистрес: управління емоціями та вигоранням",
+        desc: "Практичний курс зі зниження рівня тривожності, роботи з фоновим стресом та відновлення особистої енергії.",
+        fullDesc: "Цей курс створений для тих, хто відчуває хронічну втому, виснаження та постійну тривогу. Ви опануєте науково доведені техніки саморегуляції, навчитеся вчасно помічати ознаки вигорання та повертати ресурсний стан.",
+        author: "Ганна Смирнова",
+        authorTitle: "Клінічний психолог, КПТ-терапевт",
+        lessons: "12 уроків"
+      },
+      course2: {
+        title: "Мистецтво здорових кордонів та впевненості",
+        desc: "Навчіться говорити «ні» без почуття провини, захищати свій особистий простір та вибудовувати гармонійні стосунки.",
+        fullDesc: "Практичний практикум з відстоювання особистих кордонів. Допомагає позбутися синдрому «зручної людини», навчитися екологічно виражати агресію та цінувати себе.",
+        author: "Олена Ковальчук",
+        authorTitle: "Практичний психолог",
+        lessons: "9 уроків"
+      },
+      course3: {
+        title: "Стосунки в парі: від конфліктів до близькості",
+        desc: "Покрокова програма для пар та тих, хто хоче подолати кризи, покращити комунікацію та повернути довіру.",
+        fullDesc: "Глибока програма для роботи над стосунками. Розбираємо причини частих сварок, вчимося чути одне одного без звинувачень та відновлюємо емоційну близькість.",
+        author: "Софія Мельник",
+        authorTitle: "Сімейний та дитячий психолог",
+        lessons: "18 уроків"
+      },
+      course4: {
+        title: "Переможи свій страх: робота з фобіями та панікою",
+        desc: "Глибоке опрацювання панічних атак, страхів та тривожних розладів під керівництвом експертів.",
+        fullDesc: "Покроковий курс подолання панічних розладів. Ви дізнаєтеся про природу страху, опануєте дихальні протоколи та повернете впевненість у безпеці свого тіла.",
+        author: "Максим Шевченко",
+        authorTitle: "Психотерапевт, гештальт-підхід",
+        lessons: "15 уроків"
+      },
+      course5: {
+        title: "Внутрішня дитина: зцілення травм минулого",
+        desc: "Психотерапевтичний курс для роботи з дитячими образами, сценаріями та набуття внутрішньої опори.",
+        fullDesc: "М'яка терапевтична робота з дитячими спогадами та травмами. Дозволяє закрити гештальти минулого та перестати спиратися на деструктивні сценарії.",
+        author: "Дмитро Васильєв",
+        authorTitle: "Психоаналітик, сомнолог",
+        lessons: "14 уроків"
+      },
+      course6: {
+        title: "Емоційний інтелект та лідерство",
+        desc: "Як розуміти свої емоції, зчитувати стан оточуючих та ефективно керувати комунікацією.",
+        fullDesc: "Курс з розвитку емоційного інтелекту (EQ). Допомагає керувати своїми реакціями у стресових ситуаціях, зчитувати приховані мотиви людей та грамотно керувати.",
+        author: "Артем Бондаренко",
+        authorTitle: "Кар'єрний коуч, психолог",
+        lessons: "10 уроків"
+      }
     },
     card: {
       searchPlaceholder: "Пошук за ім'ям або проблематикою...",
@@ -362,6 +512,8 @@ export const translations = {
     header: {
       home: "Home",
       catalog: "Catalog",
+      courses: "Courses",
+      news: "News",
       doctorCabinet: "Doctor's Cabinet",
       clientCabinet: "Client Cabinet",
       clientLogin: "Client Cabinet",
@@ -379,6 +531,79 @@ export const translations = {
       feature2Desc: "Choose available time slots and book sessions in a few clicks without unnecessary calls.",
       feature3Title: "Confidentiality",
       feature3Desc: "We guarantee absolute security of your personal data and session privacy."
+    },
+    courses: {
+      badge: "Education & Self-Development",
+      title: "Courses & Psychological Workshops",
+      subtitle: "Self-help programs and video courses from MindCare experts",
+      priceLabel: "Price",
+      moreBtn: "Learn more",
+      currency: "UAH",
+      teacherLabel: "Course Instructor",
+      programLabel: "About the Course Program",
+      enrollBtn: "Enroll in Course",
+      badges: {
+        popular: "Popular",
+        workshop: "Workshop",
+        intensive: "Intensive",
+        new: "New",
+        deepWork: "Deep Work",
+        trend: "Trending"
+      },
+      durations: {
+        weeks3: "3 weeks",
+        weeks4: "4 weeks",
+        weeks5: "5 weeks",
+        weeks6: "6 weeks"
+      },
+      course1: {
+        title: "Anti-Stress: Managing Emotions & Burnout",
+        desc: "A practical course on reducing anxiety, managing background stress, and restoring personal energy.",
+        fullDesc: "This course is designed for those experiencing chronic fatigue, exhaustion, and constant anxiety. You will master evidence-based self-regulation techniques, learn to spot burnout signs early, and restore your inner energy.",
+        author: "Anna Smirnova",
+        authorTitle: "Clinical Psychologist, CBT Therapist",
+        lessons: "12 lessons"
+      },
+      course2: {
+        title: "The Art of Healthy Boundaries & Confidence",
+        desc: "Learn to say 'no' without guilt, protect your personal space, and build harmonious relationships.",
+        fullDesc: "A practical workshop on asserting personal boundaries. Helps overcome the 'people-pleaser' syndrome, learn to express aggression constructively, and value yourself.",
+        author: "Elena Kovalchuk",
+        authorTitle: "Practical Psychologist",
+        lessons: "9 lessons"
+      },
+      course3: {
+        title: "Couples Therapy: From Conflict to Intimacy",
+        desc: "A step-by-step program for couples and those looking to overcome crises, improve communication, and restore trust.",
+        fullDesc: "An in-depth program for working on relationships. We break down the root causes of frequent arguments, learn to listen to each other without blame, and rebuild emotional closeness.",
+        author: "Sofia Melnik",
+        authorTitle: "Family and Child Psychologist",
+        lessons: "18 lessons"
+      },
+      course4: {
+        title: "Overcome Your Fear: Phobias & Panic Control",
+        desc: "Deep exploration of panic attacks, fears, and anxiety disorders under expert guidance.",
+        fullDesc: "A step-by-step course to overcome panic disorders. You will understand the nature of fear, master breathing protocols, and regain confidence in your body's safety.",
+        author: "Maxim Shevchenko",
+        authorTitle: "Psychotherapist, Gestalt Approach",
+        lessons: "15 lessons"
+      },
+      course5: {
+        title: "Inner Child: Healing Past Trauma",
+        desc: "A psychotherapeutic course to work through childhood grievances, life scripts, and find inner support.",
+        fullDesc: "Gentle therapeutic work with childhood memories and traumas. Allows you to close past gestalten and stop relying on destructive behavioral scripts.",
+        author: "Dmitry Vasiliev",
+        authorTitle: "Psychoanalyst, Somnologist",
+        lessons: "14 lessons"
+      },
+      course6: {
+        title: "Emotional Intelligence & Leadership",
+        desc: "How to understand your emotions, read others' states, and effectively manage communication.",
+        fullDesc: "A course on developing emotional intelligence (EQ). Helps you manage your reactions in stressful situations, read people's hidden motives, and lead effectively.",
+        author: "Artem Bondarenko",
+        authorTitle: "Career Coach, Psychologist",
+        lessons: "10 lessons"
+      }
     },
     card: {
       searchPlaceholder: "Search by name or topic...",

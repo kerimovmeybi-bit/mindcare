@@ -27,7 +27,7 @@ export const NewsSection = () => {
   };
 
   return (
-    <section className="mt-16 pt-12 border-t border-slate-200 dark:border-slate-800">
+    <section id="news-section" className="mt-16 pt-12 border-t border-slate-200 dark:border-slate-800">
       <div className="flex items-center justify-between mb-8">
         <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
           {sectionTitle[lang] || sectionTitle.ru}
@@ -109,7 +109,7 @@ export const NewsSection = () => {
             <div className="mt-8 pt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
               <button
                 onClick={() => setSelectedArticle(null)}
-                className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py.5 rounded-xl transition-all shadow-md shadow-teal-600/20"
+                className="bg-teal-600 hover:bg-teal-700 text-white font-semibold px-6 py-2.5 rounded-xl transition-all shadow-md shadow-teal-600/20"
               >
                 {closeText[lang] || closeText.ru}
               </button>

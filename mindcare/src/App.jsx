@@ -7,7 +7,9 @@ import { BookingModal } from './components/BookingModal';
 import { PsychologistDashboard } from './components/PsychologistDashboard';
 import { ClientDashboard } from './components/ClientDashboard';
 import { NewsSection } from './components/NewsSection';
+import { CoursesSection } from './components/CoursesSection';
 import { RegisterModal } from './components/RegisterModal';
+import { PaymentModal } from './components/PaymentModal';
 import { useLanguage } from './context/LanguageContext';
 import { Search, Lock, AlertCircle, UserCheck, Stethoscope, User } from 'lucide-react';
 
@@ -21,6 +23,9 @@ function App() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isClientLoginOpen, setIsClientLoginOpen] = useState(false);
   const [isDoctorLoginOpen, setIsDoctorLoginOpen] = useState(false);
+  
+  // Состояние для модального окна оплаты
+  const [courseToPay, setCourseToPay] = useState(null);
   
   // Состояние входа специалиста
   const [loggedInDoctorId, setLoggedInDoctorId] = useState(() => {
@@ -168,6 +173,17 @@ function App() {
   const currentDoctor = psychologists.find((p) => p.id === loggedInDoctorId);
   const currentClient = clients.find((c) => c.id === loggedInClientId);
 
+  // Обработчик клика "Записаться на курс"
+  const handleCourseEnroll = (course) => {
+    if (currentClient || currentDoctor) {
+      // Есть аккаунт -> открываем окно ввода данных карты
+      setCourseToPay(course);
+    } else {
+      // Нет аккаунта -> окно регистрации
+      setIsRegisterOpen(true);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col justify-between">
       <div>
@@ -199,11 +215,11 @@ function App() {
                   onUpdateClient={handleUpdateClient}
                 />
               ) : (
-                /* Заглушка для неавторизованного клиента (как у врача на 2 скрине) */
+                /* Заглушка для неавторизованного клиента */
                 <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl mx-auto p-8 shadow-sm">
                   <User className="w-12 h-12 text-teal-600 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold mb-2">{t('clientDashboardNotLogged.title') || "Личный кабинет клиента"}</h2>
-                  <p className="text-xs text-slate-500 mb-6">{t('clientDashboardNotLogged.prompt') || "Чтобы просматривать и управлять своими записями на сессии, пожалуйста, войдите в систему."}</p>
+                  <p className="text-xs text-slate-500 mb-6">{t('clientDashboardNotLogged.prompt') || "Чтобы просматривать и управлять своими записями на сессию, пожалуйста, войдите в систему."}</p>
                   <button
                     onClick={() => setIsClientLoginOpen(true)}
                     className="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/30 transition-all"
@@ -213,7 +229,7 @@ function App() {
                 </div>
               )
             ) : (
-              /* Главная страница с Hero-блоком сверху и каталогом ниже */
+              /* Главная страница */
               <div className="space-y-16">
                 <HeroHome 
                   onExploreCatalog={() => {
@@ -272,6 +288,10 @@ function App() {
                   )}
 
                   <NewsSection />
+                  <CoursesSection 
+                    onEnroll={handleCourseEnroll} 
+                    onOpenRegister={() => setIsRegisterOpen(true)} 
+                  />
                 </div>
               </div>
             )
@@ -318,6 +338,14 @@ function App() {
             onClose={() => setIsRegisterOpen(false)}
             onRegisterSuccess={handleRegisterSuccess}
           />
+
+          {/* Модальное окно оплаты курса */}
+          {courseToPay && (
+            <PaymentModal 
+              course={courseToPay}
+              onClose={() => setCourseToPay(null)}
+            />
+          )}
 
           {/* Модальное окно входа для клиента */}
           {isClientLoginOpen && !currentClient && (

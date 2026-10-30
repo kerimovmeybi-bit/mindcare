@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Handshake, Home, Search, Stethoscope, User, Sun, Moon } from 'lucide-react';
+import { Handshake, Home, Search, GraduationCap, Newspaper, Stethoscope, User, Sun, Moon } from 'lucide-react';
 
 export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLogin, activeTab, setActiveTab }) => {
   const { language, setLanguage, theme, setTheme, t } = useLanguage();
@@ -18,6 +18,24 @@ export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLog
     const catalogElement = document.getElementById('psychologists-catalog');
     if (catalogElement) {
       catalogElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleCoursesClick = () => {
+    setRole('client');
+    setActiveTab('courses');
+    const coursesElement = document.getElementById('courses-section');
+    if (coursesElement) {
+      coursesElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNewsClick = () => {
+    setRole('client');
+    setActiveTab('news');
+    const newsElement = document.getElementById('news-section');
+    if (newsElement) {
+      newsElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -43,7 +61,7 @@ export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLog
           <button
             type="button"
             onClick={handleHomeClick}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
               currentRole === 'client' && activeTab === 'home'
                 ? 'bg-teal-600 text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -57,7 +75,7 @@ export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLog
           <button
             type="button"
             onClick={handleCatalogClick}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
               currentRole === 'client' && activeTab === 'catalog'
                 ? 'bg-teal-600 text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -67,11 +85,39 @@ export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLog
             {t('header.catalog') || "Каталог"}
           </button>
 
-          {/* 3. Кабинет врача */}
+          {/* 3. Курсы */}
+          <button
+            type="button"
+            onClick={handleCoursesClick}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+              currentRole === 'client' && activeTab === 'courses'
+                ? 'bg-teal-600 text-white shadow-sm'
+                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <GraduationCap className="w-4 h-4" />
+            {t('header.courses') || "Курсы"}
+          </button>
+
+          {/* 4. Новости */}
+          <button
+            type="button"
+            onClick={handleNewsClick}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
+              currentRole === 'client' && activeTab === 'news'
+                ? 'bg-teal-600 text-white shadow-sm'
+                : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
+            }`}
+          >
+            <Newspaper className="w-4 h-4" />
+            {t('header.news') || "Новости"}
+          </button>
+
+          {/* 5. Кабинет врача */}
           <button
             type="button"
             onClick={() => setRole('psychologist')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
               currentRole === 'psychologist'
                 ? 'bg-teal-600 text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
@@ -81,11 +127,11 @@ export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLog
             {t('header.doctorCabinet') || "Кабинет врача"}
           </button>
 
-          {/* 4. Кабинет клиента */}
+          {/* 6. Кабинет клиента */}
           <button
             type="button"
             onClick={onOpenClientLogin}
-            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold transition-all ${
               currentRole === 'client' && activeTab === 'client-cabinet'
                 ? 'bg-teal-600 text-white shadow-sm'
                 : 'text-slate-500 hover:text-slate-900 dark:hover:text-white'
