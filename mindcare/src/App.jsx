@@ -8,9 +8,11 @@ import { PsychologistDashboard } from './components/PsychologistDashboard';
 import { ClientDashboard } from './components/ClientDashboard';
 import { NewsSection } from './components/NewsSection';
 import { CoursesSection } from './components/CoursesSection';
+import { ReviewsSection } from './components/ReviewsSection';
 import { RegisterModal } from './components/RegisterModal';
 import { PaymentModal } from './components/PaymentModal';
 import { useLanguage } from './context/LanguageContext';
+import { CookieBanner } from './components/CookieBanner';
 import { Search, Lock, AlertCircle, UserCheck, Stethoscope, User } from 'lucide-react';
 
 function App() {
@@ -292,6 +294,9 @@ function App() {
                     onEnroll={handleCourseEnroll} 
                     onOpenRegister={() => setIsRegisterOpen(true)} 
                   />
+                  <ReviewsSection 
+                    onOpenRegister={() => setIsRegisterOpen(true)} 
+                  />
                 </div>
               </div>
             )
@@ -477,6 +482,9 @@ function App() {
       <footer className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-12 border-t border-slate-200 dark:border-slate-800 text-center">
         <p className="text-xs text-slate-400 font-medium">{t('madeBy') || "Сделано с душой для MindCare • Керимли Мейбулла"}</p>
       </footer>
+
+      {/* Плашка согласия с Cookie */}
+      <CookieBanner />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { CreditCard, Lock, CheckCircle2, X } from 'lucide-react';
+import { CreditCard, Lock, CheckCircle2, X, Sparkles, ShieldCheck } from 'lucide-react';
 
 export const PaymentModal = ({ course, onClose, onSuccess }) => {
   const { t, theme, language: lang } = useLanguage();
@@ -38,48 +38,57 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
   if (!course) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
-      <div className={`${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative transition-all`}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 backdrop-blur-md p-4 animate-fade-in">
+      <div className={`relative w-full max-w-md rounded-3xl p-6 sm:p-8 shadow-2xl border overflow-hidden transition-all ${
+        isDark 
+          ? 'bg-slate-900/90 border-slate-800 text-white shadow-teal-500/5' 
+          : 'bg-white/95 border-slate-200 text-slate-900 shadow-xl'
+      } backdrop-blur-xl`}>
         
+        {/* Декоративное неоновое свечение на фоне */}
+        <div className="absolute -top-12 -right-12 w-40 h-40 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
+
         {/* Кнопка закрытия */}
         <button 
           onClick={onClose}
-          className="absolute right-4 top-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+          className="absolute right-5 top-5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all z-10"
         >
           <X className="w-5 h-5" />
         </button>
 
         {!isSuccess ? (
           /* ЭКРАН 1: ФОРМА ОПЛАТЫ КАРТОЙ */
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-950 text-teal-600 flex items-center justify-center shrink-0">
-                <CreditCard className="w-5 h-5" />
+          <div className="relative z-10">
+            <div className="flex items-center gap-3.5 mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 border border-teal-500/20 shadow-sm">
+                <CreditCard className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-lg leading-snug">
+                <h3 className="font-black text-lg leading-snug tracking-tight">
                   {lang === 'en' ? 'Course Payment' : lang === 'ua' ? 'Оплата курсу' : 'Оплата курса'}
                 </h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <p className="text-xs text-teal-600 dark:text-teal-400 font-bold mt-0.5">
                   {t(course.titleKey)}
                 </p>
               </div>
             </div>
 
             {/* Сумма к оплате */}
-            <div className={`p-4 rounded-2xl mb-6 flex justify-between items-center border ${isDark ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-50 border-slate-200'}`}>
-              <span className="text-xs font-semibold text-slate-500">
+            <div className={`p-4 rounded-2xl mb-6 flex justify-between items-center border ${
+              isDark ? 'bg-slate-800/60 border-slate-700/80' : 'bg-slate-50 border-slate-200'
+            }`}>
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
                 {lang === 'en' ? 'Amount due:' : lang === 'ua' ? 'До сплати:' : 'К оплате:'}
               </span>
-              <span className="text-xl font-extrabold text-teal-600">
-                {course.price} {t('courses.currency')}
+              <span className="text-xl font-black text-teal-600 dark:text-teal-400">
+                {course.price} <span className="text-xs font-bold text-slate-400">{t('courses.currency') || 'грн'}</span>
               </span>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Номер карты */}
               <div>
-                <label className="block text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">
+                <label className="block text-[11px] font-bold mb-1.5 text-slate-400 uppercase tracking-wider">
                   {lang === 'en' ? 'Card Number' : lang === 'ua' ? 'Номер картки' : 'Номер карты'}
                 </label>
                 <div className="relative">
@@ -89,16 +98,18 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
                     value={cardNumber}
                     onChange={handleCardNumberChange}
                     required
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-800 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 outline-none tracking-widest font-mono"
+                    className={`w-full pl-11 pr-4 py-3 rounded-2xl border text-xs font-mono font-medium tracking-widest outline-none focus:ring-2 focus:ring-teal-500 transition-all ${
+                      isDark ? 'bg-slate-800/80 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                    }`}
                   />
-                  <CreditCard className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
+                  <CreditCard className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
                 </div>
               </div>
 
               {/* Срок и CVC */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">
+                  <label className="block text-[11px] font-bold mb-1.5 text-slate-400 uppercase tracking-wider">
                     {lang === 'en' ? 'Expiry Date' : lang === 'ua' ? 'Термін дії' : 'Срок действия'}
                   </label>
                   <input
@@ -107,11 +118,13 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
                     value={expiry}
                     onChange={handleExpiryChange}
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-800 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 outline-none text-center font-mono"
+                    className={`w-full px-4 py-3 rounded-2xl border text-xs font-mono font-medium text-center outline-none focus:ring-2 focus:ring-teal-500 transition-all ${
+                      isDark ? 'bg-slate-800/80 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                    }`}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">
+                  <label className="block text-[11px] font-bold mb-1.5 text-slate-400 uppercase tracking-wider">
                     CVC / CVV
                   </label>
                   <input
@@ -121,14 +134,16 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
                     value={cvc}
                     onChange={(e) => setCvc(e.target.value.replace(/\D/g, '').slice(0, 3))}
                     required
-                    className="w-full px-4 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-800 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 outline-none text-center font-mono"
+                    className={`w-full px-4 py-3 rounded-2xl border text-xs font-mono font-medium text-center outline-none focus:ring-2 focus:ring-teal-500 transition-all ${
+                      isDark ? 'bg-slate-800/80 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                    }`}
                   />
                 </div>
               </div>
 
               {/* Имя держателя */}
               <div>
-                <label className="block text-xs font-semibold mb-1 text-slate-500 dark:text-slate-400">
+                <label className="block text-[11px] font-bold mb-1.5 text-slate-400 uppercase tracking-wider">
                   {lang === 'en' ? 'Cardholder Name' : lang === 'ua' ? "Ім'я на картці" : 'Имя владельца'}
                 </label>
                 <input
@@ -137,16 +152,18 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
                   value={cardHolder}
                   onChange={(e) => setCardHolder(e.target.value.toUpperCase())}
                   required
-                  className="w-full px-4 py-2.5 rounded-xl border text-xs bg-slate-50 dark:bg-slate-800 dark:border-slate-700 focus:ring-2 focus:ring-teal-500 outline-none uppercase font-mono"
+                  className={`w-full px-4 py-3 rounded-2xl border text-xs font-mono font-medium uppercase outline-none focus:ring-2 focus:ring-teal-500 transition-all ${
+                    isDark ? 'bg-slate-800/80 border-slate-700 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+                  }`}
                 />
               </div>
 
               {/* Кнопка оплаты */}
               <button
                 type="submit"
-                className="w-full mt-2 py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/30 transition-all flex items-center justify-center gap-2"
+                className="w-full mt-2 py-3.5 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl text-xs font-bold shadow-lg shadow-teal-600/25 transition-all active:scale-95 flex items-center justify-center gap-2"
               >
-                <Lock className="w-3.5 h-3.5" />
+                <Lock className="w-4 h-4" />
                 <span>
                   {lang === 'en' 
                     ? `Pay ${course.price} UAH` 
@@ -155,20 +172,25 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
                     : `Оплатить ${course.price} грн`}
                 </span>
               </button>
+
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-400 pt-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-teal-500" />
+                <span>Безопасное шифрование платежа</span>
+              </div>
             </form>
           </div>
         ) : (
           /* ЭКРАН 2: ОПЛАТА УСПЕШНА */
-          <div className="text-center py-4">
-            <div className="w-16 h-16 bg-teal-100 dark:bg-teal-950 text-teal-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
+          <div className="text-center py-6 relative z-10 animate-fade-in">
+            <div className="w-16 h-16 bg-emerald-500/10 text-emerald-500 rounded-3xl flex items-center justify-center mx-auto mb-4 border border-emerald-500/20 shadow-md">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
-            <h3 className="text-xl font-bold mb-2">
+            <h3 className="text-2xl font-black tracking-tight mb-2">
               {lang === 'en' ? "Payment Successful!" : lang === 'ua' ? "Оплата успішна!" : "Оплата прошла успешно!"}
             </h3>
 
-            <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mb-6 leading-relaxed max-w-sm mx-auto">
               {lang === 'en' 
                 ? `You have successfully enrolled in "${t(course.titleKey)}". Amount paid: ${course.price} UAH.`
                 : lang === 'ua' 
@@ -178,7 +200,7 @@ export const PaymentModal = ({ course, onClose, onSuccess }) => {
 
             <button
               onClick={onClose}
-              className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-teal-600/30 transition-all"
+              className="w-full py-3.5 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl text-xs font-bold shadow-lg shadow-teal-600/25 transition-all active:scale-95"
             >
               {lang === 'en' ? "Start Learning" : lang === 'ua' ? "Розпочати навчання" : "Перейти к обучению"}
             </button>

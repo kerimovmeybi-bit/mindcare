@@ -212,6 +212,11 @@ export const translations = {
       priceLabel: "Стоимость сессии (грн/час)",
       submitBtn: "Зарегистрироваться"
     },
+    cookie: {
+      text: "Мы используем файлы cookie для улучшения работы сайта и обеспечения безопасности.",
+      accept: "Принять все",
+      decline: "Только необходимые"
+    },
     psychologists: {
       anna: {
         name: "Анна Смирнова",
@@ -458,6 +463,11 @@ export const translations = {
       priceLabel: "Вартість сесії (грн/год)",
       submitBtn: "Зареєструватися"
     },
+    cookie: {
+      text: "Ми використовуємо файли cookie для покращення роботи сайту та забезпечення безпеки.",
+      accept: "Прийняти всі",
+      decline: "Тільки необхідні"
+    },
     psychologists: {
       anna: {
         name: "Ганна Смирнова",
@@ -703,6 +713,11 @@ export const translations = {
       titlePlaceholder: "Clinical Psychologist, CBT Therapist",
       priceLabel: "Session Price (UAH / hr)",
       submitBtn: "Register"
+    },
+    cookie: {
+      text: "We use cookies to enhance site navigation and ensure security.",
+      accept: "Accept All",
+      decline: "Necessary Only"
     },
     psychologists: {
       anna: {
