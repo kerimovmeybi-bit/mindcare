@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { User, LogOut, Calendar, Edit2, Save, X, Phone, Mail, Upload, Sparkles, CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { User, LogOut, Calendar, Edit2, Save, X, Phone, Mail, Upload, Sparkles, CheckCircle2, Clock, XCircle, Video } from 'lucide-react';
+import { VideoCallModal } from './VideoCallModal';
 
 export const ClientDashboard = ({ currentClient, bookings, onLogout, onUpdateBookingStatus, onUpdateClient }) => {
   const { theme, t } = useLanguage();
@@ -11,6 +12,9 @@ export const ClientDashboard = ({ currentClient, bookings, onLogout, onUpdateBoo
   const [phone, setPhone] = useState(currentClient.phone || '');
   const [email, setEmail] = useState(currentClient.email || '');
   const [avatar, setAvatar] = useState(currentClient.avatar || '');
+
+  // Состояние для управления модалкой видеосвязи
+  const [activeVideoBooking, setActiveVideoBooking] = useState(null);
 
   const clientBookings = bookings.filter((b) => b.clientEmail?.toLowerCase() === currentClient.email?.toLowerCase());
 
@@ -199,7 +203,7 @@ export const ClientDashboard = ({ currentClient, bookings, onLogout, onUpdateBoo
                   {booking.notes && <p className="text-xs text-slate-500 dark:text-slate-400 mt-1"><strong>{t('dashboard.notes') || "Запрос"}:</strong> {booking.notes}</p>}
                 </div>
                 
-                <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+                <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
                   <span className={`px-3.5 py-1.5 rounded-xl text-xs font-bold inline-flex items-center gap-1.5 ${
                     booking.status === 'confirmed' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' :
                     booking.status === 'cancelled' ? 'bg-rose-500/10 text-rose-500 border border-rose-500/20' :
@@ -212,10 +216,23 @@ export const ClientDashboard = ({ currentClient, bookings, onLogout, onUpdateBoo
                     {booking.status === 'confirmed' ? (t('dashboard.statusConfirmed') || "Подтверждена") : booking.status === 'cancelled' ? (t('dashboard.statusCancelled') || "Отменена") : (t('dashboard.statusPending') || "В ожидании")}
                   </span>
 
+                  {/* Кнопка входа в видеокомнату для подтвержденных сессий */}
+                  {booking.status === 'confirmed' && (
+                    <button
+                      onClick={() => setActiveVideoBooking(booking)}
+                      className="px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold shadow-md shadow-teal-600/25 transition-all active:scale-95 flex items-center gap-1.5"
+                    >
+                      <Video className="w-4 h-4" />
+                      <span>
+                        {t('dashboard.videoRoomBtn') || (lang === 'en' ? 'Video Room' : lang === 'ua' ? 'Відеокімната' : 'Видеокомната')}
+                      </span>
+                    </button>
+                  )}
+
                   {booking.status !== 'cancelled' && (
                     <button
                       onClick={() => onUpdateBookingStatus(booking.id, 'cancelled')}
-                      className="px-3.5 py-2 rounded-xl border border-rose-500/30 text-rose-500 hover:bg-rose-500/10 text-xs font-bold transition-all active:scale-95"
+                      className="px-3.5 py-2.5 rounded-xl border border-rose-500/30 text-rose-500 hover:bg-rose-500/10 text-xs font-bold transition-all active:scale-95"
                     >
                       {t('clientDashboard.cancelBtn') || "Отменить"}
                     </button>
@@ -232,6 +249,13 @@ export const ClientDashboard = ({ currentClient, bookings, onLogout, onUpdateBoo
           </div>
         )}
       </div>
+
+      {/* Модальное окно видеосвязи */}
+      <VideoCallModal 
+        isOpen={!!activeVideoBooking}
+        booking={activeVideoBooking}
+        onClose={() => setActiveVideoBooking(null)}
+      />
     </div>
   );
 };

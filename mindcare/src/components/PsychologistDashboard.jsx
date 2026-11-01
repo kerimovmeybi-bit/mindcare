@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { LogOut, Calendar, Plus, X, Save, Clock, User, Phone, Tag, CheckCircle2, DollarSign, Activity, CheckSquare, Camera, Link as LinkIcon, Award, FileText, Upload, Sparkles, Check } from 'lucide-react';
+import { LogOut, Calendar, Plus, X, Save, Clock, User, Phone, Tag, CheckCircle2, DollarSign, Activity, CheckSquare, Camera, Link as LinkIcon, Award, FileText, Upload, Sparkles, Check, Video } from 'lucide-react';
+import { VideoCallModal } from './VideoCallModal';
 
 export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychologist, onLogout, onUpdateBookingStatus }) => {
-  const { t, theme } = useLanguage();
+  const { t, theme, language: lang } = useLanguage();
   const isDark = theme === 'dark';
   const fileInputRef = useRef(null);
   const certFileInputRef = useRef(null);
@@ -27,6 +28,9 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
   const [slotDate, setSlotDate] = useState('');
   const [slotTime, setSlotTime] = useState('');
   const [savedMessage, setSavedMessage] = useState(false);
+
+  // Состояние для управления активным видеосозвоном
+  const [activeVideoBooking, setActiveVideoBooking] = useState(null);
 
   const availableTopics = ['anxiety', 'burnout', 'relationships', 'depression', 'selfEsteem'];
 
@@ -578,6 +582,7 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
                       </select>
                     )}
                   </div>
+
                   <p className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
                     <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                     <strong>{t('dashboard.clientName') || "Клиент:"}</strong> {b.clientName}
@@ -591,6 +596,21 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
                       <strong>{t('dashboard.notes') || "Запрос:"}</strong> {b.notes}
                     </p>
                   )}
+
+                  {/* Кнопка видеокомнаты для подтвержденной сессии */}
+                  {b.status === 'confirmed' && (
+                    <div className="pt-2">
+                      <button
+                        onClick={() => setActiveVideoBooking(b)}
+                        className="w-full py-2.5 rounded-xl bg-teal-600 hover:bg-teal-500 text-white text-xs font-bold shadow-md shadow-teal-600/25 transition-all active:scale-95 flex items-center justify-center gap-2"
+                      >
+                        <Video className="w-4 h-4" />
+                        <span>
+                          {lang === 'en' ? 'Video Room with Client' : lang === 'ua' ? 'Відеокімната з клієнтом' : 'Видеокомната с клиентом'}
+                        </span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -601,6 +621,13 @@ export const PsychologistDashboard = ({ currentDoctor, bookings, onUpdatePsychol
           )}
         </div>
       </div>
+
+      {/* Модальное окно видеосвязи для психолога */}
+      <VideoCallModal 
+        isOpen={!!activeVideoBooking}
+        booking={activeVideoBooking}
+        onClose={() => setActiveVideoBooking(null)}
+      />
     </div>
   );
 };

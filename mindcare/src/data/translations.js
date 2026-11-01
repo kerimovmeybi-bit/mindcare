@@ -32,6 +32,7 @@ export const translations = {
       title: "Найдите своего психолога для гармонии и поддержки",
       subtitle: "MindCare — это профессиональная платформа, объединяющая проверенных специалистов. Получайте бережную помощь онлайн, записывайтесь на сессии в удобное время и возвращайте душевное равновесие.",
       exploreBtn: "Смотреть каталог психологов",
+      chooseSpecialistBtn: "Выбрать специалиста", 
       registerBtn: "Зарегистрироваться",
       feature1Title: "Проверенные эксперты",
       feature1Desc: "Все специалисты проходят строгую верификацию дипломов, квалификации и практического опыта.",
@@ -158,6 +159,7 @@ export const translations = {
       statusConfirmed: "Подтверждена",
       statusCompleted: "Завершена",
       statusCancelled: "Отменена",
+      videoRoomBtn: "Видеокомната",
       stats: {
         totalBookings: "Всего записей",
         confirmedSessions: "Подтверждено",
@@ -284,6 +286,7 @@ export const translations = {
       subtitle: "MindCare — це професійна платформа, що об'єднує перевірених фахівців. Отримуйте дбайливу допомогу онлайн, записуйтеся на сесії у зручний час та повертайте душевну рівновагу.",
       exploreBtn: "Дивитися каталог психологів",
       registerBtn: "Зареєструватися",
+      chooseSpecialistBtn: "Обрати фахівця",
       feature1Title: "Перевірені експерти",
       feature1Desc: "Усі фахівці проходять сувору верифікацію дипломів, кваліфікації та практичного досвіду.",
       feature2Title: "Зручний запис",
@@ -409,6 +412,7 @@ export const translations = {
       statusConfirmed: "Підтверджена",
       statusCompleted: "Завершена",
       statusCancelled: "Скасована",
+      videoRoomBtn: "Відеокімната",
       stats: {
         totalBookings: "Усього записів",
         confirmedSessions: "Підтверджено",
@@ -534,6 +538,7 @@ export const translations = {
       title: "Find your therapist for harmony and support",
       subtitle: "MindCare is a professional platform connecting verified specialists. Get gentle online support, book sessions at your convenience, and restore your inner peace.",
       exploreBtn: "Browse Therapists",
+      chooseSpecialistBtn: "Choose specialist",
       registerBtn: "Sign Up",
       feature1Title: "Verified Experts",
       feature1Desc: "All specialists undergo strict verification of diplomas, qualifications, and practical experience.",
@@ -660,6 +665,7 @@ export const translations = {
       statusConfirmed: "Confirmed",
       statusCompleted: "Completed",
       statusCancelled: "Cancelled",
+      videoRoomBtn: "Video Room",
       stats: {
         totalBookings: "Total Bookings",
         confirmedSessions: "Confirmed",

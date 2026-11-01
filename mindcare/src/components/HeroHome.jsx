@@ -21,7 +21,7 @@ export const HeroHome = ({ onExploreCatalog, onOpenRegister }) => {
 
   return (
     <div className="relative overflow-hidden py-12 sm:py-20">
-      {/* Мягкое, еле заметное глубокое свечение вместо резких пятен */}
+      {/* Мягкое, еле заметное глубокое свечение */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[800px] h-[300px] sm:h-[500px] bg-teal-600/10 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Главный блок с параллаксом */}
@@ -55,7 +55,7 @@ export const HeroHome = ({ onExploreCatalog, onOpenRegister }) => {
             onClick={onExploreCatalog}
             className="w-full sm:w-auto px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl text-sm font-bold shadow-xl shadow-teal-600/25 hover:shadow-teal-600/40 transition-all duration-300 flex items-center justify-center gap-2.5 group active:scale-95"
           >
-            <span>Выбрать специалиста</span>
+            <span>{t('hero.chooseSpecialistBtn') || "Выбрать специалиста"}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
 
