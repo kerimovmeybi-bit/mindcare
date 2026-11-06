@@ -11,9 +11,13 @@ import { CoursesSection } from './components/CoursesSection';
 import { ReviewsSection } from './components/ReviewsSection';
 import { RegisterModal } from './components/RegisterModal';
 import { PaymentModal } from './components/PaymentModal';
+import { PsychologistQuizModal } from './components/PsychologistQuizModal';
+import { ToastContainer } from './components/ToastContainer';
+import { AIChatModal } from './components/AIChatModal';
 import { useLanguage } from './context/LanguageContext';
 import { CookieBanner } from './components/CookieBanner';
-import { Search, Lock, AlertCircle, UserCheck, Stethoscope, User } from 'lucide-react';
+import { Footer } from './components/Footer';
+import { Search, Lock, AlertCircle, UserCheck, Stethoscope, User, Sparkles, Bot } from 'lucide-react';
 
 function App() {
   const [role, setRole] = useState('client'); // 'client' | 'psychologist'
@@ -25,6 +29,19 @@ function App() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const [isClientLoginOpen, setIsClientLoginOpen] = useState(false);
   const [isDoctorLoginOpen, setIsDoctorLoginOpen] = useState(false);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
+
+  // Состояние для всплывающих уведомлений (Toasts)
+  const [toasts, setToasts] = useState([]);
+
+  const showToast = (message, type = 'success', title = '') => {
+    const id = Date.now();
+    setToasts((prev) => [...prev, { id, message, type, title }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 4000);
+  };
   
   // Состояние для модального окна оплаты
   const [courseToPay, setCourseToPay] = useState(null);
@@ -72,7 +89,7 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const { theme, t } = useLanguage();
+  const { theme, t, language: lang } = useLanguage();
   const isDark = theme === 'dark';
 
   useEffect(() => {
@@ -110,18 +127,21 @@ function App() {
 
   const handleBookConfirm = (bookingData) => {
     setBookings((prev) => [...prev, bookingData]);
+    showToast('Сессия успешно забронирована!', 'success', 'Успешно');
   };
 
   const handleUpdateBookingStatus = (bookingId, newStatus) => {
     setBookings((prev) =>
       prev.map((b) => (b.id === bookingId ? { ...b, status: newStatus } : b))
     );
+    showToast('Статус сессии обновлен', 'success');
   };
 
   const handleUpdateClient = (updatedClient) => {
     setClients((prev) =>
       prev.map((c) => (c.id === updatedClient.id ? updatedClient : c))
     );
+    showToast('Профиль успешно обновлен', 'success');
   };
 
   const handleRegisterSuccess = (newUser) => {
@@ -130,11 +150,13 @@ function App() {
       setLoggedInDoctorId(newUser.id);
       setRole('psychologist');
       setActiveTab('doctor-cabinet');
+      showToast('Регистрация специалиста прошла успешно!', 'success');
     } else if (newUser.role === 'client') {
       setClients((prev) => [...prev, newUser]);
       setLoggedInClientId(newUser.id);
       setRole('client');
       setActiveTab('client-cabinet');
+      showToast('Добро пожаловать в MindCare!', 'success');
     }
   };
 
@@ -150,8 +172,10 @@ function App() {
       setClientLoginPassword('');
       setIsClientLoginOpen(false);
       setActiveTab('client-cabinet');
+      showToast('Вы успешно вошли в кабинет!', 'success');
     } else {
       setClientLoginError(t('clientLoginError') || 'Неверный email или пароль клиента');
+      showToast('Неверный email или пароль', 'error', 'Ошибка входа');
     }
   };
 
@@ -167,27 +191,32 @@ function App() {
       setLoginPassword('');
       setIsDoctorLoginOpen(false);
       setActiveTab('doctor-cabinet');
+      showToast('Вход в кабинет врача выполнен', 'success');
     } else {
       setLoginError(t('login.error') || 'Неверный email или пароль специалиста');
+      showToast('Неверные данные специалиста', 'error', 'Ошибка');
     }
   };
 
   const currentDoctor = psychologists.find((p) => p.id === loggedInDoctorId);
   const currentClient = clients.find((c) => c.id === loggedInClientId);
 
-  // Обработчик клика "Записаться на курс"
+  const handleFooterNavigate = (tab) => {
+    setRole('client');
+    setActiveTab(tab);
+  };
+
   const handleCourseEnroll = (course) => {
     if (currentClient || currentDoctor) {
-      // Есть аккаунт -> открываем окно ввода данных карты
       setCourseToPay(course);
     } else {
-      // Нет аккаунта -> окно регистрации
       setIsRegisterOpen(true);
+      showToast('Для записи на курс необходимо зарегистрироваться', 'info');
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col justify-between">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col justify-between pb-16 sm:pb-0">
       <div>
         <Header 
           currentRole={role} 
@@ -205,19 +234,18 @@ function App() {
           {role === 'client' ? (
             activeTab === 'client-cabinet' ? (
               currentClient ? (
-                /* Личный кабинет авторизованного клиента */
                 <ClientDashboard 
                   currentClient={currentClient}
                   bookings={bookings}
                   onLogout={() => {
                     setLoggedInClientId(null);
                     setActiveTab('home');
+                    showToast('Вы вышли из аккаунта', 'info');
                   }}
                   onUpdateBookingStatus={handleUpdateBookingStatus}
                   onUpdateClient={handleUpdateClient}
                 />
               ) : (
-                /* Заглушка для неавторизованного клиента */
                 <div className="text-center py-20 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-xl mx-auto p-8 shadow-sm">
                   <User className="w-12 h-12 text-teal-600 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold mb-2">{t('clientDashboardNotLogged.title') || "Личный кабинет клиента"}</h2>
@@ -231,7 +259,6 @@ function App() {
                 </div>
               )
             ) : (
-              /* Главная страница */
               <div className="space-y-16">
                 <HeroHome 
                   onExploreCatalog={() => {
@@ -244,7 +271,21 @@ function App() {
 
                 <div id="psychologists-catalog" className="pt-8 border-t border-slate-200 dark:border-slate-800">
                   <div className="mb-8 space-y-4">
-                    <h2 className="text-2xl font-bold tracking-tight">Наши специалисты</h2>
+                    <div className="flex items-center justify-between flex-wrap gap-4">
+                      <h2 className="text-2xl font-bold tracking-tight">
+                        {lang === 'en' ? 'Our Specialists' : lang === 'ua' ? 'Наші фахівці' : 'Наши специалисты'}
+                      </h2>
+                      <button
+                        onClick={() => setIsQuizOpen(true)}
+                        className="px-4 py-2.5 bg-teal-500/10 hover:bg-teal-500/20 text-teal-600 dark:text-teal-400 border border-teal-500/30 rounded-2xl text-xs font-bold transition-all flex items-center gap-2 shadow-sm active:scale-95"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        <span>
+                          {lang === 'en' ? 'Find psychologist in 1 min' : lang === 'ua' ? 'Підібрати психолога за 1 хв' : 'Подобрать психолога за 1 минуту'}
+                        </span>
+                      </button>
+                    </div>
+
                     <div className="relative max-w-xl">
                       <Search className="absolute left-4 top-3.5 w-5 h-5 text-slate-400" />
                       <input
@@ -285,7 +326,9 @@ function App() {
                     </div>
                   ) : (
                     <div className="text-center py-12 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl">
-                      <p className="text-slate-500">Ничего не найдено.</p>
+                      <p className="text-slate-500">
+                        {lang === 'en' ? 'Nothing found.' : lang === 'ua' ? 'Нічого не знайдено.' : 'Ничего не найдено.'}
+                      </p>
                     </div>
                   )}
 
@@ -301,16 +344,19 @@ function App() {
               </div>
             )
           ) : (
-            /* Кабинет психолога */
             <div>
               {currentDoctor ? (
                 <PsychologistDashboard 
                   currentDoctor={currentDoctor}
                   bookings={bookings}
-                  onUpdatePsychologist={(doc) => setPsychologists(prev => prev.map(p => p.id === doc.id ? doc : p))}
+                  onUpdatePsychologist={(doc) => {
+                    setPsychologists(prev => prev.map(p => p.id === doc.id ? doc : p));
+                    showToast('Профиль врача обновлен', 'success');
+                  }}
                   onLogout={() => {
                     setLoggedInDoctorId(null);
                     setActiveTab('home');
+                    showToast('Вы вышли из кабинета врача', 'info');
                   }}
                   onUpdateBookingStatus={handleUpdateBookingStatus}
                 />
@@ -344,15 +390,23 @@ function App() {
             onRegisterSuccess={handleRegisterSuccess}
           />
 
-          {/* Модальное окно оплаты курса */}
+          <PsychologistQuizModal 
+            isOpen={isQuizOpen}
+            onClose={() => setIsQuizOpen(false)}
+            psychologists={psychologists}
+            onSelectDoctor={(doc) => setSelectedDoctorForBooking(doc)}
+          />
+
           {courseToPay && (
             <PaymentModal 
               course={courseToPay}
-              onClose={() => setCourseToPay(null)}
+              onClose={() => {
+                setCourseToPay(null);
+                showToast('Оплата прошла успешно! Вы записаны на курс.', 'success');
+              }}
             />
           )}
 
-          {/* Модальное окно входа для клиента */}
           {isClientLoginOpen && !currentClient && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
               <div className={`${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative`}>
@@ -413,7 +467,6 @@ function App() {
             </div>
           )}
 
-          {/* Модальное окно входа для специалиста */}
           {isDoctorLoginOpen && !currentDoctor && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4">
               <div className={`${isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'} border rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative`}>
@@ -479,11 +532,29 @@ function App() {
         </main>
       </div>
 
-      <footer className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-12 border-t border-slate-200 dark:border-slate-800 text-center">
-        <p className="text-xs text-slate-400 font-medium">{t('madeBy') || "Сделано с душой для MindCare • Керимли Мейбулла"}</p>
-      </footer>
+      <Footer onNavigate={handleFooterNavigate} />
 
-      {/* Плашка согласия с Cookie */}
+      {/* Фиксированная плавающая кнопка вызова ИИ-помощника (безопасное положение снизу) */}
+      <button
+        onClick={() => setIsAIChatOpen(!isAIChatOpen)}
+        className="fixed bottom-4 right-4 z-40 bg-teal-600 hover:bg-teal-500 text-white p-3.5 rounded-full shadow-2xl shadow-teal-600/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shrink-0"
+        title={lang === 'en' ? 'AI Assistant' : lang === 'ua' ? 'ШІ-Помічник' : 'ИИ-Помощник'}
+      >
+        <div className="relative shrink-0 flex items-center justify-center">
+          <Bot className="w-6 h-6" />
+          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-teal-600 animate-pulse" />
+        </div>
+      </button>
+
+      {/* Окно ИИ-чата */}
+      <AIChatModal 
+        isOpen={isAIChatOpen} 
+        onClose={() => setIsAIChatOpen(false)} 
+      />
+
+      {/* Контейнер всплывающих уведомлений */}
+      <ToastContainer toasts={toasts} onRemove={(id) => setToasts(prev => prev.filter(t => t.id !== id))} />
+
       <CookieBanner />
     </div>
   );

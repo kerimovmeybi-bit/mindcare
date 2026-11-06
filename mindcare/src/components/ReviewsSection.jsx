@@ -124,7 +124,7 @@ export const ReviewsSection = ({ onOpenRegister }) => {
   };
 
   return (
-    <section id="reviews-section" className="mt-20 pt-16 border-t border-slate-200 dark:border-slate-800 relative">
+    <section id="reviews-section" className="mt-20 pt-16 pb-12 border-t border-slate-200 dark:border-slate-800 relative">
       {/* Неоновый акцент сзади для атмосферы */}
       <div className="absolute top-1/3 right-10 w-80 h-80 bg-teal-500/5 rounded-full blur-[140px] pointer-events-none" />
 
@@ -222,12 +222,12 @@ export const ReviewsSection = ({ onOpenRegister }) => {
         </div>
       )}
 
-      {/* Сетка отзывов с эффектом Glassmorphism */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+      {/* Сетка отзывов с эффектом Glassmorphism и равной высотой карточек */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 items-stretch">
         {reviews.map((rev) => (
           <div
             key={rev.id}
-            className={`group rounded-3xl p-6 border transition-all duration-300 flex flex-col justify-between space-y-4 ${
+            className={`group rounded-3xl p-6 border transition-all duration-300 flex flex-col justify-between h-full ${
               isDark 
                 ? 'bg-slate-900/80 border-slate-800/80 hover:border-teal-500/40 hover:shadow-2xl hover:shadow-teal-500/10' 
                 : 'bg-white/80 border-slate-200 hover:border-teal-500/40 hover:shadow-2xl hover:shadow-teal-600/10'
@@ -248,7 +248,7 @@ export const ReviewsSection = ({ onOpenRegister }) => {
               </p>
             </div>
 
-            <div className="flex items-center gap-3.5 pt-4 border-t border-slate-100 dark:border-slate-800/80">
+            <div className="flex items-center gap-3.5 pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80">
               <div className="w-11 h-11 rounded-2xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 font-bold text-xs border border-teal-500/20 shadow-sm group-hover:scale-105 transition-transform">
                 <User className="w-5 h-5" />
               </div>
