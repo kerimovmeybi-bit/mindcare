@@ -14,6 +14,7 @@ import { PaymentModal } from './components/PaymentModal';
 import { PsychologistQuizModal } from './components/PsychologistQuizModal';
 import { ToastContainer } from './components/ToastContainer';
 import { AIChatModal } from './components/AIChatModal';
+import { MoodTracker } from './components/MoodTracker'; // 👈 Импорт дневника настроения
 import { useLanguage } from './context/LanguageContext';
 import { CookieBanner } from './components/CookieBanner';
 import { Footer } from './components/Footer';
@@ -332,6 +333,9 @@ function App() {
                     </div>
                   )}
 
+                  {/* Интерактивный виджет Дневника настроения */}
+                  <MoodTracker />
+
                   <NewsSection />
                   <CoursesSection 
                     onEnroll={handleCourseEnroll} 
@@ -534,7 +538,7 @@ function App() {
 
       <Footer onNavigate={handleFooterNavigate} />
 
-      {/* Фиксированная плавающая кнопка вызова ИИ-помощника (безопасное положение снизу) */}
+      {/* Фиксированная плавающая кнопка вызова ИИ-помощника */}
       <button
         onClick={() => setIsAIChatOpen(!isAIChatOpen)}
         className="fixed bottom-4 right-4 z-40 bg-teal-600 hover:bg-teal-500 text-white p-3.5 rounded-full shadow-2xl shadow-teal-600/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 shrink-0"
