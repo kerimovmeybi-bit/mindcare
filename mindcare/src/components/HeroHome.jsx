@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Handshake, ShieldCheck, Clock, HeartHandshake, ArrowRight } from 'lucide-react';
+import { Handshake, ShieldCheck, Clock, HeartHandshake, ArrowRight, Heart } from 'lucide-react';
 
-export const HeroHome = ({ onExploreCatalog, onOpenRegister }) => {
-  const { t, theme } = useLanguage();
+export const HeroHome = ({ onExploreCatalog, onSupportFestival }) => {
+  const { t, theme, language: lang } = useLanguage();
   const isDark = theme === 'dark';
 
   const [scrollY, setScrollY] = useState(0);
@@ -19,9 +19,35 @@ export const HeroHome = ({ onExploreCatalog, onOpenRegister }) => {
   const opacity = Math.max(0, 1 - scrollY / 400);
   const translateY = scrollY * 0.3;
 
+  const handleFundraiserClick = () => {
+    if (onSupportFestival) {
+      onSupportFestival();
+    } else {
+      window.open('https://send.monobank.ua/', '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Тексты для кнопок в зависимости от выбранного языка (RU, UA, EN)
+  const ctaButtonTexts = {
+    ru: {
+      consultation: 'Получить бесплатную консультацию психолога',
+      fundraiser: 'Поддержать сбор фестиваля «Хвиля» для Superhumans Odesa'
+    },
+    ua: {
+      consultation: 'Отримати безкоштовну консультацію психолога',
+      fundraiser: 'Підтримати збір фестивалю «Хвиля» для Superhumans Odesa'
+    },
+    en: {
+      consultation: 'Get a free psychologist consultation',
+      fundraiser: 'Support "Khvylia" festival fundraiser for Superhumans Odesa'
+    }
+  };
+
+  const currentTexts = ctaButtonTexts[lang] || ctaButtonTexts.ru;
+
   return (
     <div className="relative overflow-hidden py-12 sm:py-20">
-      {/* Мягкое, еле заметное глубокое свечение */}
+      {/* Мягкое свечение */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[800px] h-[300px] sm:h-[500px] bg-teal-600/10 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Главный блок с параллаксом */}
@@ -31,7 +57,7 @@ export const HeroHome = ({ onExploreCatalog, onOpenRegister }) => {
           transform: `translateY(${translateY}px)`,
           transition: 'transform 0.1s ease-out, opacity 0.1s ease-out'
         }}
-        className="text-center max-w-3xl mx-auto space-y-6 relative z-10 px-4"
+        className="text-center max-w-4xl mx-auto space-y-6 relative z-10 px-4"
       >
         {/* Бейдж */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-bold tracking-wide">
@@ -49,25 +75,26 @@ export const HeroHome = ({ onExploreCatalog, onOpenRegister }) => {
           {t('hero.subtitle') || "MindCare — это профессиональная платформа, объединяющая проверенных специалистов. Получайте бережную помощь онлайн, записывайтесь на сессии в удобное время и возвращайте душевное равновесие."}
         </p>
 
-        {/* Кнопки */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+        {/* Кнопки прямого действия (с поддержкой языков RU, UA, EN) */}
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-4 pt-4">
           <button
             onClick={onExploreCatalog}
-            className="w-full sm:w-auto px-8 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl text-sm font-bold shadow-xl shadow-teal-600/25 hover:shadow-teal-600/40 transition-all duration-300 flex items-center justify-center gap-2.5 group active:scale-95"
+            className="w-full lg:w-auto px-7 py-4 bg-teal-600 hover:bg-teal-700 text-white rounded-2xl text-sm font-bold shadow-xl shadow-teal-600/25 hover:shadow-teal-600/40 transition-all duration-300 flex items-center justify-center gap-2.5 group active:scale-95"
           >
-            <span>{t('hero.chooseSpecialistBtn') || "Выбрать специалиста"}</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span>{currentTexts.consultation}</span>
+            <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-1 transition-transform" />
           </button>
 
           <button
-            onClick={onOpenRegister}
-            className={`w-full sm:w-auto px-8 py-4 rounded-2xl text-sm font-bold border transition-all duration-300 active:scale-95 ${
+            onClick={handleFundraiserClick}
+            className={`w-full lg:w-auto px-7 py-4 rounded-2xl text-sm font-bold border transition-all duration-300 flex items-center justify-center gap-2.5 active:scale-95 ${
               isDark 
-                ? 'bg-slate-900/50 border-slate-800 text-slate-200 hover:bg-slate-800 hover:border-teal-500/40' 
-                : 'bg-white/80 border-slate-200 text-slate-800 hover:bg-slate-50 hover:border-teal-500/40'
+                ? 'bg-slate-900/70 border-amber-500/40 text-amber-300 hover:bg-amber-500/10 hover:border-amber-400' 
+                : 'bg-white/90 border-amber-500/50 text-amber-700 hover:bg-amber-50 hover:border-amber-500'
             } backdrop-blur-xl shadow-sm`}
           >
-            {t('hero.registerBtn') || "Зарегистрироваться"}
+            <Heart className="w-4 h-4 text-amber-500 fill-amber-500/20 shrink-0" />
+            <span>{currentTexts.fundraiser}</span>
           </button>
         </div>
       </div>

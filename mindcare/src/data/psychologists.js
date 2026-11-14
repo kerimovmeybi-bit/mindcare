@@ -8,6 +8,7 @@ export const initialPsychologists = [
     reviewsCount: 38,
     experience: 7,
     price: 1000,
+    isFreeFirstSession: true, // 👈 Первая сессия бесплатна
     topics: ["anxiety", "burnout", "selfEsteem"],
     availableSlots: ["Пн 10:00", "Ср 14:00", "Пт 16:00"]
   },
@@ -20,6 +21,7 @@ export const initialPsychologists = [
     reviewsCount: 52,
     experience: 10,
     price: 1500,
+    isFreeFirstSession: false,
     topics: ["relationships", "depression", "anxiety"],
     availableSlots: ["Вт 11:00", "Чт 15:00"]
   },
@@ -32,6 +34,7 @@ export const initialPsychologists = [
     reviewsCount: 24,
     experience: 5,
     price: 1000,
+    isFreeFirstSession: true, // 👈 Первая сессия бесплатна
     topics: ["selfEsteem", "burnout", "relationships"],
     availableSlots: ["Пн 12:00", "Чт 10:00"]
   },
@@ -44,6 +47,7 @@ export const initialPsychologists = [
     reviewsCount: 45,
     experience: 12,
     price: 1800,
+    isFreeFirstSession: false,
     topics: ["depression", "anxiety"],
     availableSlots: ["Ср 11:00", "Пт 14:00"]
   },
@@ -56,6 +60,7 @@ export const initialPsychologists = [
     reviewsCount: 31,
     experience: 8,
     price: 1300,
+    isFreeFirstSession: false,
     topics: ["relationships", "selfEsteem"],
     availableSlots: ["Вт 13:00", "Чт 16:00"]
   },
@@ -68,6 +73,7 @@ export const initialPsychologists = [
     reviewsCount: 29,
     experience: 6,
     price: 1100,
+    isFreeFirstSession: true, // 👈 Первая сессия бесплатна
     topics: ["burnout", "selfEsteem"],
     availableSlots: ["Пн 15:00", "Пт 11:00"]
   }

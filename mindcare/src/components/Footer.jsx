@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Heart, ShieldCheck, Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
+import { Heart, ShieldCheck, Mail, Send, ArrowUpRight } from 'lucide-react';
 
 export const Footer = ({ onNavigate }) => {
   const { theme, language: lang } = useLanguage();
@@ -107,23 +107,33 @@ export const Footer = ({ onNavigate }) => {
             </ul>
           </div>
 
-          {/* Контакты */}
+          {/* Контакты (Только Telegram и Email по ТЗ) */}
           <div className="space-y-3">
             <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">
               {lang === 'en' ? 'Contacts' : lang === 'ua' ? 'Контакти' : 'Контакты'}
             </h4>
-            <ul className="space-y-2.5 text-xs text-slate-500 dark:text-slate-400">
-              <li className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-teal-500 shrink-0" />
-                <span>support@mindcare.ua</span>
+            <ul className="space-y-3 text-xs text-slate-500 dark:text-slate-400">
+              <li>
+                <a 
+                  href="https://t.me/mindcare_support_bot" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-teal-600 dark:text-teal-400 hover:text-teal-500 font-semibold transition-colors"
+                >
+                  <Send className="w-3.5 h-3.5 shrink-0" />
+                  <span>
+                    {lang === 'en' ? 'Telegram Bot / Chat' : lang === 'ua' ? 'Telegram-бот / Чат' : 'Telegram-бот / Чат'}
+                  </span>
+                </a>
               </li>
-              <li className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-teal-500 shrink-0" />
-                <span>+380 (800) 333-22-11</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-teal-500 shrink-0" />
-                <span>{lang === 'en' ? 'Kyiv, Ukraine (Online 24/7)' : lang === 'ua' ? 'Київ, Україна (Online 24/7)' : 'Киев, Украина (Online 24/7)'}</span>
+              <li>
+                <a 
+                  href="mailto:support@mindcare.ua" 
+                  className="inline-flex items-center gap-2 hover:text-teal-500 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-teal-500 shrink-0" />
+                  <span>support@mindcare.ua</span>
+                </a>
               </li>
             </ul>
           </div>
