@@ -5,7 +5,11 @@ const LanguageContext = createContext();
 
 export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState(() => {
-    return localStorage.getItem('mindcare_lang') || 'ru';
+    const saved = localStorage.getItem('mindcare_lang');
+    if (!saved || saved === 'ru') {
+      return 'ua';
+    }
+    return saved;
   });
   
   const [theme, setTheme] = useState(() => {

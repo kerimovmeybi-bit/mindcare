@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Handshake, ShieldCheck, Clock, HeartHandshake, ArrowRight, Heart } from 'lucide-react';
 
@@ -6,24 +6,11 @@ export const HeroHome = ({ onExploreCatalog, onSupportFestival }) => {
   const { t, theme, language: lang } = useLanguage();
   const isDark = theme === 'dark';
 
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const opacity = Math.max(0, 1 - scrollY / 400);
-  const translateY = scrollY * 0.3;
-
   const handleFundraiserClick = () => {
     if (onSupportFestival) {
       onSupportFestival();
     } else {
-      window.open('https://send.monobank.ua/', '_blank', 'noopener,noreferrer');
+      window.open('https://send.monobank.ua/jar/9TT9j1AWtW/', '_blank', 'noopener,noreferrer');
     }
   };
 
@@ -50,15 +37,8 @@ export const HeroHome = ({ onExploreCatalog, onSupportFestival }) => {
       {/* Мягкое свечение */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] sm:w-[800px] h-[300px] sm:h-[500px] bg-teal-600/10 rounded-full blur-[160px] pointer-events-none" />
 
-      {/* Главный блок с параллаксом */}
-      <div 
-        style={{
-          opacity: opacity,
-          transform: `translateY(${translateY}px)`,
-          transition: 'transform 0.1s ease-out, opacity 0.1s ease-out'
-        }}
-        className="text-center max-w-4xl mx-auto space-y-6 relative z-10 px-4"
-      >
+      {/* Главный блок (теперь полностью статичный) */}
+      <div className="text-center max-w-4xl mx-auto space-y-6 relative z-10 px-4">
         {/* Бейдж */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-600 dark:text-teal-400 text-xs font-bold tracking-wide">
           <Handshake className="w-4 h-4" />

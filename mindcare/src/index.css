@@ -2,17 +2,17 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Жесткое предотвращение горизонтального скролла на мобилках */
-html, body {
+/* Предотвращение горизонтального скролла на уровне окна */
+body {
   overflow-x: hidden;
-  max-width: 100vw;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
-/* Базовые настройки и плавная смена тем */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {

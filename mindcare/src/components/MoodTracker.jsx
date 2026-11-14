@@ -6,7 +6,8 @@ export const MoodTracker = () => {
   const { theme, language: lang } = useLanguage();
   const isDark = theme === 'dark';
 
-  const [selectedMood, setSelectedMood] = useState(null);
+  // Сохраняем только ID выбранного настроения вместо всего объекта
+  const [selectedMoodId, setSelectedMoodId] = useState(null);
 
   const moods = [
     { 
@@ -33,7 +34,7 @@ export const MoodTracker = () => {
     },
     { 
       id: 'tired', 
-      label: lang === 'en' ? 'Tired' : lang === 'ua' ? 'Ввтома' : 'Усталость', 
+      label: lang === 'en' ? 'Tired' : lang === 'ua' ? 'Втома' : 'Усталость', 
       icon: Meh, 
       color: 'text-indigo-400 border-indigo-500/30 bg-indigo-500/10', 
       advice: lang === 'en' 
@@ -55,6 +56,9 @@ export const MoodTracker = () => {
     },
   ];
 
+  // Динамически находим активное настроение — теперь при смене языка текст будет сразу актуальным
+  const selectedMood = moods.find((m) => m.id === selectedMoodId);
+
   return (
     <div className={`w-full max-w-4xl mx-auto my-12 p-6 sm:p-8 rounded-3xl border shadow-2xl transition-all ${
       isDark 
@@ -75,9 +79,9 @@ export const MoodTracker = () => {
             {lang === 'en' ? 'How are you feeling today?' : lang === 'ua' ? 'Як ви почуваєтесь сьогодні?' : 'Как вы себя чувствуете сегодня?'}
           </h3>
         </div>
-        {selectedMood && (
+        {selectedMoodId && (
           <button 
-            onClick={() => setSelectedMood(null)}
+            onClick={() => setSelectedMoodId(null)}
             className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-white transition font-medium"
           >
             <RefreshCw className="w-3.5 h-3.5" /> 
@@ -89,11 +93,11 @@ export const MoodTracker = () => {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 relative z-10">
         {moods.map((m) => {
           const Icon = m.icon;
-          const isSelected = selectedMood?.id === m.id;
+          const isSelected = selectedMoodId === m.id;
           return (
             <button
               key={m.id}
-              onClick={() => setSelectedMood(m)}
+              onClick={() => setSelectedMoodId(m.id)}
               className={`p-4 rounded-2xl border flex flex-col items-center justify-center gap-2 transition-all ${
                 isSelected 
                   ? `${m.color} ring-2 ring-teal-500/50 scale-[1.02]` 

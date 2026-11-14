@@ -59,7 +59,7 @@ export const Header = ({ currentRole, setRole, isClientLoggedIn, onOpenClientLog
   };
 
   return (
-    <header className={`sticky top-0 z-40 border-b backdrop-blur-xl transition-colors ${
+    <header className={`fixed top-0 left-0 right-0 z-40 border-b backdrop-blur-xl transition-colors ${
       isDark ? 'bg-slate-900/80 border-slate-800 text-white shadow-2xl shadow-teal-500/5' : 'bg-white/80 border-slate-200 text-slate-900 shadow-lg'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
